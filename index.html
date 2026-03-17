@@ -7,1493 +7,775 @@
   <meta name="description" content="Invierte en bienes raíces de Latinoamérica desde $50 USD. Tokenización inmobiliaria real, transparente y accesible para todos." />
   <meta property="og:title" content="VivenDapp — Tokenización Inmobiliaria en LATAM" />
   <meta property="og:description" content="Invierte en bienes raíces desde $50 USD. Real, transparente, para todos." />
-  <meta property="og:image" content="https://vivendapp.io/og-image.jpg" />
   <meta property="og:url" content="https://vivendapp.io" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #6C3FF5;
-      --primary-light: #8B5CF6;
-      --primary-dark: #4C1D95;
-      --accent: #10B981;
-      --accent-light: #34D399;
-      --gold: #F59E0B;
-      --bg: #0A0A0F;
-      --bg2: #0F0F1A;
-      --bg3: #141428;
-      --surface: #1A1A2E;
-      --surface2: #20203A;
-      --border: rgba(108, 63, 245, 0.2);
-      --text: #F0F0FF;
-      --text-muted: #9090B8;
-      --text-dim: #6060A0;
+      --green:   #32BB75;
+      --teal:    #36BDAF;
+      --blue:    #42BFEC;
+      --dark:    #181936;
+      --dark2:   #1f2248;
+      --dark3:   #252a5c;
+      --light:   #F2F4F4;
+      --white:   #ffffff;
+      --grad:    linear-gradient(135deg, #42BFEC 0%, #36BDAF 50%, #32BB75 100%);
+      --grad-r:  linear-gradient(135deg, #32BB75 0%, #36BDAF 50%, #42BFEC 100%);
+      --grad-v:  linear-gradient(180deg, #42BFEC 0%, #32BB75 100%);
+      --border:  rgba(66,191,236,0.15);
+      --text-muted: rgba(242,244,244,0.6);
       --radius: 16px;
       --radius-lg: 24px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--dark);
+      color: var(--light);
       overflow-x: hidden;
       line-height: 1.6;
     }
+    h1,h2,h3,h4,h5 { font-family: 'Nunito', sans-serif; }
 
-    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+    /* ── LOGO SVG ── */
+    .logo-svg { width:36px; height:36px; }
 
-    /* ─── NOISE OVERLAY ─── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ─── NAV ─── */
+    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 16px 0;
-      transition: all 0.3s;
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      padding:16px 0; transition:all .3s;
     }
     nav.scrolled {
-      background: rgba(10, 10, 15, 0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+      background:rgba(24,25,54,0.92);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
     }
     .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width:1200px; margin:0 auto; padding:0 24px;
+      display:flex; align-items:center; justify-content:space-between;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-    }
-    .logo-icon {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo-text {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.5px;
+      font-family:'Nunito',sans-serif; font-weight:900;
+      font-size:22px; letter-spacing:-0.5px;
     }
-    .logo-text span { color: var(--primary-light); }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
+    .logo-text .viven { color:var(--blue); }
+    .logo-text .dapp  { color:var(--green); }
+    .nav-links { display:flex; align-items:center; gap:28px; list-style:none; }
     .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color 0.2s;
+      color:var(--text-muted); text-decoration:none;
+      font-size:14px; font-weight:600; transition:color .2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover { color:var(--light); }
     .nav-cta {
-      background: var(--primary);
-      color: #fff !important;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 14px !important;
-      transition: background 0.2s, transform 0.1s !important;
+      background:var(--grad) !important;
+      color:var(--dark) !important;
+      padding:10px 22px; border-radius:10px;
+      font-size:14px !important; font-weight:800 !important;
+      transition:all .2s !important; box-shadow:0 4px 20px rgba(50,187,117,0.3);
     }
-    .nav-cta:hover {
-      background: var(--primary-light) !important;
-      transform: translateY(-1px);
-    }
-    .nav-mobile-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      font-size: 24px;
-    }
+    .nav-cta:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(50,187,117,0.45) !important; }
+    .nav-mobile-btn { display:none; background:none; border:none; color:var(--light); cursor:pointer; font-size:24px; }
 
-    /* ─── HERO ─── */
+    /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      position: relative;
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      text-align:center; padding:120px 24px 80px; position:relative; overflow:hidden;
     }
-    .hero-glow {
-      position: absolute;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(108,63,245,0.15) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+    .hero-bg {
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(66,191,236,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 50% at 80% 80%, rgba(50,187,117,0.1) 0%, transparent 60%);
     }
-    .hero-glow2 {
-      position: absolute;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%);
-      top: 30%; right: 10%;
-      pointer-events: none;
+    .hero-grid {
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(66,191,236,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(66,191,236,0.04) 1px, transparent 1px);
+      background-size:60px 60px;
     }
-    .hero-content { position: relative; z-index: 1; max-width: 820px; }
+    .hero-content { position:relative; z-index:1; max-width:860px; }
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(108, 63, 245, 0.15);
-      border: 1px solid rgba(108, 63, 245, 0.3);
-      padding: 8px 16px;
-      border-radius: 100px;
-      font-size: 13px;
-      color: var(--primary-light);
-      font-weight: 600;
-      margin-bottom: 28px;
-      letter-spacing: 0.5px;
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(66,191,236,0.1); border:1px solid rgba(66,191,236,0.25);
+      padding:8px 18px; border-radius:100px; font-size:13px;
+      color:var(--blue); font-weight:700; margin-bottom:32px; letter-spacing:.5px;
     }
     .hero-badge .dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
+      width:6px; height:6px; border-radius:50%; background:var(--green);
+      animation:pulse 2s infinite;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.4); }
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%{ opacity:.5; transform:scale(1.5); }
     }
     .hero h1 {
-      font-size: clamp(42px, 6vw, 76px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      margin-bottom: 24px;
+      font-size:clamp(40px,6vw,78px); font-weight:900;
+      line-height:1.08; letter-spacing:-2px; margin-bottom:28px;
     }
-    .hero h1 .gradient {
-      background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .hero h1 .grad-text {
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
     }
     .hero-sub {
-      font-size: clamp(16px, 2vw, 20px);
-      color: var(--text-muted);
-      max-width: 580px;
-      margin: 0 auto 40px;
-      font-weight: 400;
-      line-height: 1.7;
+      font-size:clamp(16px,2vw,20px); color:var(--text-muted);
+      max-width:600px; margin:0 auto 44px; font-weight:400; line-height:1.7;
     }
-    .hero-ctas {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 64px;
-    }
+    .hero-sub strong { color:var(--light); font-weight:700; }
+    .hero-ctas { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:72px; }
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: #fff;
-      padding: 16px 32px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 16px;
-      transition: all 0.2s;
-      box-shadow: 0 8px 32px rgba(108, 63, 245, 0.35);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      background:var(--grad); color:var(--dark);
+      padding:17px 36px; border-radius:14px; text-decoration:none;
+      font-weight:800; font-size:16px; transition:all .2s;
+      box-shadow:0 8px 32px rgba(50,187,117,0.4);
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'Nunito',sans-serif;
     }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(108, 63, 245, 0.5);
-    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(50,187,117,0.55); }
     .btn-secondary {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--text);
-      padding: 16px 32px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      background:rgba(242,244,244,0.06); border:1.5px solid rgba(242,244,244,0.15);
+      color:var(--light); padding:17px 36px; border-radius:14px; text-decoration:none;
+      font-weight:700; font-size:16px; transition:all .2s;
+      display:inline-flex; align-items:center; gap:8px;
     }
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.2);
-      transform: translateY(-2px);
-    }
-    .hero-stats {
-      display: flex;
-      gap: 48px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .stat {
-      text-align: center;
-    }
+    .btn-secondary:hover { background:rgba(242,244,244,0.12); transform:translateY(-2px); }
+    .hero-stats { display:flex; gap:48px; justify-content:center; flex-wrap:wrap; }
+    .stat { text-align:center; }
     .stat-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family:'Nunito',sans-serif; font-size:34px; font-weight:900;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
     }
-    .stat-label {
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-top: 4px;
-      font-weight: 500;
-    }
-    .stat-divider {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-    }
+    .stat-label { font-size:13px; color:var(--text-muted); margin-top:4px; font-weight:500; }
+    .stat-div { width:1px; background:var(--border); }
 
-    /* ─── SECTION COMMONS ─── */
-    section { position: relative; z-index: 1; }
-    .section-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 100px 24px;
+    /* ── SECTIONS ── */
+    section { position:relative; z-index:1; }
+    .sec { max-width:1200px; margin:0 auto; padding:100px 24px; }
+    .sec-label {
+      display:inline-block; font-size:12px; font-weight:800;
+      letter-spacing:2.5px; text-transform:uppercase;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+      margin-bottom:14px;
     }
-    .section-label {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--primary-light);
-      margin-bottom: 16px;
+    .sec-title {
+      font-size:clamp(30px,4vw,52px); font-weight:900;
+      line-height:1.1; letter-spacing:-1px; margin-bottom:16px;
     }
-    .section-title {
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 20px;
-    }
-    .section-sub {
-      font-size: 18px;
-      color: var(--text-muted);
-      max-width: 560px;
-      line-height: 1.7;
-    }
-    .text-accent { color: var(--accent-light); }
-    .text-purple { color: var(--primary-light); }
+    .sec-sub { font-size:18px; color:var(--text-muted); max-width:560px; line-height:1.7; }
 
-    /* ─── WHAT IS ─── */
-    .what-is {
-      background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    /* ── WHAT IS ── */
+    .what { background:var(--dark2); }
+    .what-grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; margin-top:60px; }
+    .card-glass {
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:var(--radius-lg); padding:32px; position:relative; overflow:hidden;
     }
-    .what-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      margin-top: 60px;
+    .card-glass::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:var(--grad);
     }
-    .what-visual {
-      position: relative;
+    .building-top { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+    .building-img-placeholder {
+      width:52px; height:52px; border-radius:14px;
+      background:var(--grad); display:flex; align-items:center;
+      justify-content:center; font-size:26px; flex-shrink:0;
     }
-    .building-card {
-      background: linear-gradient(135deg, var(--surface), var(--surface2));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-    .building-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-    }
-    .building-top {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .building-icon {
-      font-size: 48px;
-    }
-    .building-info h4 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .building-info p {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .building-chart {
-      height: 80px;
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
+    .building-info h4 { font-size:16px; font-weight:800; margin-bottom:4px; }
+    .building-info p { font-size:13px; color:var(--text-muted); }
+    .chart-bars { height:72px; display:flex; align-items:flex-end; gap:6px; margin-bottom:20px; }
     .bar {
-      flex: 1;
-      background: linear-gradient(180deg, var(--primary-light), var(--primary-dark));
-      border-radius: 4px 4px 0 0;
-      opacity: 0.7;
-      animation: barGrow 1.5s ease-out forwards;
-      transform-origin: bottom;
+      flex:1; border-radius:4px 4px 0 0;
+      background:linear-gradient(180deg,var(--blue),var(--green));
+      opacity:.75; animation:grow 1.4s ease-out forwards;
+      transform-origin:bottom; transform:scaleY(0);
     }
-    @keyframes barGrow {
-      from { transform: scaleY(0); }
-      to { transform: scaleY(1); }
+    @keyframes grow { to { transform:scaleY(1); } }
+    .chip-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .chip {
+      background:rgba(50,187,117,0.1); border:1px solid rgba(50,187,117,0.2);
+      color:var(--green); padding:5px 12px; border-radius:100px; font-size:12px; font-weight:700;
     }
-    .building-tokens {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+    .fb {
+      position:absolute; background:var(--dark3); border:1px solid var(--border);
+      border-radius:12px; padding:10px 14px; font-size:12px; font-weight:700;
+      display:flex; align-items:center; gap:8px;
+      box-shadow:0 8px 32px rgba(0,0,0,.5);
     }
-    .token-chip {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      color: var(--accent-light);
-      padding: 6px 12px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 700;
+    .fb-1 { top:-18px; right:-18px; }
+    .fb-2 { bottom:-14px; left:-18px; }
+    .fb-dot { width:8px; height:8px; border-radius:50%; background:var(--green); }
+    .what-points { display:flex; flex-direction:column; gap:28px; }
+    .what-point { display:flex; gap:16px; }
+    .pt-icon {
+      width:50px; height:50px; border-radius:14px; flex-shrink:0;
+      background:rgba(66,191,236,0.08); border:1px solid rgba(66,191,236,0.15);
+      display:flex; align-items:center; justify-content:center; font-size:22px;
     }
-    .floating-badge {
-      position: absolute;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    }
-    .fb-1 { top: -20px; right: -20px; }
-    .fb-2 { bottom: -16px; left: -20px; }
-    .fb-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .pt-text h4 { font-size:17px; font-weight:800; margin-bottom:6px; }
+    .pt-text p { font-size:15px; color:var(--text-muted); line-height:1.65; }
 
-    .what-points { display: flex; flex-direction: column; gap: 28px; }
-    .what-point {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .point-icon {
-      width: 48px; height: 48px;
-      background: rgba(108, 63, 245, 0.1);
-      border: 1px solid rgba(108, 63, 245, 0.2);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-    .point-text h4 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .point-text p {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ─── HOW IT WORKS ─── */
-    .how { background: var(--bg2); }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-top: 60px;
-      position: relative;
-    }
+    /* ── HOW ── */
+    .how { background:var(--dark3); }
+    .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:60px; position:relative; }
     .steps::before {
-      content: '';
-      position: absolute;
-      top: 32px;
-      left: calc(12.5% + 20px);
-      right: calc(12.5% + 20px);
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      opacity: 0.3;
+      content:''; position:absolute; top:28px;
+      left:calc(12.5% + 24px); right:calc(12.5% + 24px);
+      height:2px; background:var(--grad); opacity:.3;
     }
-    .step {
-      text-align: center;
-      padding: 28px 20px;
-      position: relative;
+    .step { text-align:center; padding:24px 16px; }
+    .step-num {
+      width:56px; height:56px; border-radius:50%;
+      background:var(--grad); display:flex; align-items:center; justify-content:center;
+      font-family:'Nunito',sans-serif; font-size:20px; font-weight:900;
+      color:var(--dark); margin:0 auto 20px; position:relative; z-index:1;
+      box-shadow:0 8px 24px rgba(50,187,117,.4);
     }
-    .step-number {
-      width: 56px; height: 56px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      margin: 0 auto 20px;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 8px 24px rgba(108, 63, 245, 0.4);
-    }
-    .step h4 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .step p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+    .step h4 { font-size:16px; font-weight:800; margin-bottom:10px; }
+    .step p { font-size:13px; color:var(--text-muted); line-height:1.65; }
 
-    /* ─── TOKEN ─── */
-    .token { background: var(--bg3); }
-    .token-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
-      margin-top: 60px;
+    /* ── TOKEN ── */
+    .token { background:var(--dark2); }
+    .token-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; margin-top:60px; }
+    .token-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .tc {
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:var(--radius); padding:24px; transition:all .3s;
     }
-    .token-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .tc:hover { border-color:rgba(66,191,236,.4); transform:translateY(-4px); }
+    .tc-icon { font-size:28px; margin-bottom:12px; }
+    .tc h4 { font-size:15px; font-weight:800; margin-bottom:8px; }
+    .tc p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+    .tc.span2 { grid-column:span 2; background:rgba(50,187,117,0.05); border-color:rgba(50,187,117,.2); }
+    .coin-box {
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:var(--radius-lg); padding:40px; text-align:center; margin-bottom:24px;
     }
-    .token-card {
-      background: linear-gradient(135deg, var(--surface), var(--surface2));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: all 0.3s;
+    .coin {
+      width:100px; height:100px; border-radius:50%; background:var(--grad);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Nunito',sans-serif; font-size:22px; font-weight:900;
+      color:var(--dark); margin:0 auto 20px;
+      box-shadow:0 16px 48px rgba(50,187,117,.5);
     }
-    .token-card:hover {
-      border-color: rgba(108, 63, 245, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(108, 63, 245, 0.15);
+    .coin-name { font-size:28px; font-weight:900; margin-bottom:6px; }
+    .coin-sub { font-size:14px; color:var(--text-muted); }
+    .metrics { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .met {
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:12px; padding:16px; text-align:center;
     }
-    .token-card-icon {
-      font-size: 28px;
-      margin-bottom: 12px;
+    .met-val {
+      font-family:'Nunito',sans-serif; font-size:20px; font-weight:900;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px;
     }
-    .token-card h4 {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .token-card p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .token-card.highlight {
-      background: linear-gradient(135deg, rgba(108,63,245,0.15), rgba(108,63,245,0.05));
-      border-color: rgba(108, 63, 245, 0.35);
-      grid-column: span 2;
-    }
-    .token-info {
-      position: sticky;
-      top: 100px;
-    }
-    .token-visual {
-      background: linear-gradient(135deg, var(--surface), var(--surface2));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      text-align: center;
-      margin-bottom: 28px;
-      position: relative;
-      overflow: hidden;
-    }
-    .token-visual::after {
-      content: '';
-      position: absolute;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(108,63,245,0.2) 0%, transparent 70%);
-      top: -50px; right: -50px;
-    }
-    .vive-coin {
-      width: 100px; height: 100px;
-      background: linear-gradient(135deg, #6C3FF5, #10B981);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-      color: #fff;
-      margin: 0 auto 20px;
-      box-shadow: 0 16px 48px rgba(108, 63, 245, 0.5);
-      position: relative;
-      z-index: 1;
-    }
-    .token-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .token-desc { font-size: 14px; color: var(--text-muted); }
-    .token-metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .metric {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-    }
-    .metric-val {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--primary-light);
-      margin-bottom: 4px;
-    }
-    .metric-key {
-      font-size: 12px;
-      color: var(--text-dim);
-    }
+    .met-key { font-size:12px; color:var(--text-muted); }
 
-    /* ─── LLAVE ─── */
-    .llave { background: linear-gradient(180deg, var(--bg3) 0%, var(--bg2) 100%); }
-    .llave-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      margin-top: 60px;
+    /* ── LLAVE ── */
+    .llave { background:var(--dark3); }
+    .llave-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; margin-top:60px; }
+    .key-mock {
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:var(--radius-lg); padding:40px; text-align:center; margin-bottom:16px;
     }
-    .llave-visual {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .key-mockup {
-      background: linear-gradient(135deg, var(--surface), var(--surface2));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      text-align: center;
-      position: relative;
-    }
-    .key-emoji { font-size: 80px; margin-bottom: 16px; display: block; }
+    .key-emoji { font-size:72px; margin-bottom:16px; display:block; }
     .key-code {
-      font-family: 'Space Grotesk', monospace;
-      font-size: 24px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 4px;
+      font-family:'Nunito',sans-serif; font-size:26px; font-weight:900;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:4px;
     }
-    .key-sub {
-      font-size: 13px;
-      color: var(--text-dim);
-      margin-top: 8px;
+    .key-sub { font-size:13px; color:var(--text-muted); margin-top:8px; }
+    .key-phases { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .kp {
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:12px; padding:14px 10px; text-align:center;
     }
-    .key-phases {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+    .kp-icon { font-size:22px; margin-bottom:8px; }
+    .kp-label { font-size:12px; color:var(--text-muted); font-weight:700; }
+    .badge-on {
+      display:inline-block; font-size:11px; margin-top:4px; padding:2px 8px;
+      border-radius:100px; background:rgba(50,187,117,.1); color:var(--green); font-weight:700;
     }
-    .key-phase {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 12px;
-      text-align: center;
+    .badge-soon {
+      display:inline-block; font-size:11px; margin-top:4px; padding:2px 8px;
+      border-radius:100px; background:rgba(66,191,236,.1); color:var(--blue); font-weight:700;
     }
-    .phase-icon { font-size: 24px; margin-bottom: 8px; }
-    .phase-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-    .phase-status {
-      font-size: 11px;
-      margin-top: 4px;
-      padding: 2px 8px;
-      border-radius: 100px;
-      display: inline-block;
+    .lp-list { display:flex; flex-direction:column; gap:16px; }
+    .lp {
+      display:flex; gap:14px; padding:18px 20px;
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:14px; transition:all .2s;
     }
-    .phase-status.active {
-      background: rgba(16,185,129,0.1);
-      color: var(--accent-light);
-    }
-    .phase-status.soon {
-      background: rgba(245,158,11,0.1);
-      color: var(--gold);
-    }
-    .llave-content h2 { margin-bottom: 20px; }
-    .llave-content .section-sub { margin-bottom: 32px; }
-    .llave-points {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .llave-point {
-      display: flex;
-      gap: 14px;
-      padding: 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      transition: all 0.2s;
-    }
-    .llave-point:hover {
-      border-color: rgba(108,63,245,0.4);
-      background: rgba(108,63,245,0.05);
-    }
-    .lp-icon { font-size: 24px; flex-shrink: 0; }
-    .lp-text h5 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-    .lp-text p { font-size: 13px; color: var(--text-muted); }
+    .lp:hover { border-color:rgba(50,187,117,.3); background:rgba(50,187,117,.04); }
+    .lp-ico { font-size:22px; flex-shrink:0; }
+    .lp h5 { font-size:15px; font-weight:800; margin-bottom:4px; }
+    .lp p { font-size:13px; color:var(--text-muted); }
 
-    /* ─── WHY LATAM ─── */
-    .why { background: var(--bg); }
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 60px;
+    /* ── WHY ── */
+    .why { background:var(--dark2); }
+    .why-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:60px; }
+    .wc {
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:var(--radius-lg); padding:36px 28px; transition:all .3s; position:relative; overflow:hidden;
     }
-    .why-card {
-      background: linear-gradient(135deg, var(--surface), var(--surface2));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px 28px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
+    .wc:hover { transform:translateY(-6px); border-color:rgba(50,187,117,.3); }
+    .wc::after {
+      content:''; position:absolute; bottom:-40px; right:-40px;
+      width:120px; height:120px;
+      background:radial-gradient(circle,rgba(50,187,117,.08),transparent 70%);
     }
-    .why-card::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; right: -40px;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, rgba(108,63,245,0.1) 0%, transparent 70%);
+    .wc-num {
+      font-family:'Nunito',sans-serif; font-size:52px; font-weight:900; line-height:1;
+      margin-bottom:16px; background:var(--grad);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
-    .why-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(108,63,245,0.4);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
-    }
-    .why-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 52px;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .why-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .why-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .wc h4 { font-size:18px; font-weight:800; margin-bottom:12px; }
+    .wc p { font-size:14px; color:var(--text-muted); line-height:1.7; }
 
-    /* ─── WHITEPAPER ─── */
-    .whitepaper {
-      background: linear-gradient(135deg, rgba(108,63,245,0.08), rgba(16,185,129,0.05));
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    /* ── WHITEPAPER ── */
+    .wp {
+      background:linear-gradient(135deg,rgba(66,191,236,.06),rgba(50,187,117,.04));
+      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
     }
-    .wp-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 100px 24px;
-      text-align: center;
-    }
-    .wp-icon {
-      font-size: 64px;
-      margin-bottom: 24px;
-      display: block;
-    }
-    .wp-inner h2 { font-size: clamp(32px, 4vw, 48px); margin-bottom: 20px; }
-    .wp-inner p {
-      font-size: 18px;
-      color: var(--text-muted);
-      max-width: 560px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
-    }
-    .wp-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .wp-inner { max-width:860px; margin:0 auto; padding:100px 24px; text-align:center; }
+    .wp-icon { font-size:64px; margin-bottom:24px; display:block; }
+    .wp-inner h2 { font-size:clamp(30px,4vw,48px); margin-bottom:20px; }
+    .wp-inner p { font-size:18px; color:var(--text-muted); max-width:540px; margin:0 auto 44px; line-height:1.7; }
+    .wp-ctas { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 
-    /* ─── FAQ ─── */
-    .faq { background: var(--bg2); }
-    .faq-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 60px;
-    }
+    /* ── FAQ ── */
+    .faq { background:var(--dark3); }
+    .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:60px; }
     .faq-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:var(--radius); overflow:hidden;
     }
     .faq-q {
-      width: 100%;
-      background: none;
-      border: none;
-      color: var(--text);
-      text-align: left;
-      padding: 24px;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transition: color 0.2s;
+      width:100%; background:none; border:none; color:var(--light); text-align:left;
+      padding:22px; font-size:15px; font-weight:700; font-family:'Inter',sans-serif;
+      cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+      gap:16px; transition:color .2s;
     }
-    .faq-q:hover { color: var(--primary-light); }
-    .faq-arrow {
-      font-size: 18px;
-      transition: transform 0.3s;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-    .faq-item.open .faq-arrow { transform: rotate(45deg); }
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, padding 0.3s;
-      padding: 0 24px;
-    }
-    .faq-item.open .faq-a {
-      max-height: 300px;
-      padding: 0 24px 24px;
-    }
-    .faq-a p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      border-top: 1px solid var(--border);
-      padding-top: 16px;
-    }
+    .faq-q:hover { color:var(--green); }
+    .faq-arrow { font-size:18px; transition:transform .3s; color:var(--text-muted); flex-shrink:0; }
+    .faq-item.open .faq-arrow { transform:rotate(45deg); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .35s ease,padding .3s; padding:0 22px; }
+    .faq-item.open .faq-a { max-height:280px; padding:0 22px 22px; }
+    .faq-a p { font-size:14px; color:var(--text-muted); line-height:1.7; border-top:1px solid var(--border); padding-top:14px; }
 
-    /* ─── CTA FINAL ─── */
-    .cta-final {
-      background: var(--bg);
-      text-align: center;
-    }
-    .cta-final-inner {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 100px 24px;
-    }
-    .cta-final h2 {
-      font-size: clamp(36px, 5vw, 58px);
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      margin-bottom: 20px;
-    }
-    .cta-final p {
-      font-size: 18px;
-      color: var(--text-muted);
-      margin-bottom: 40px;
-      line-height: 1.7;
-    }
-    .cta-final .btn-primary {
-      padding: 20px 48px;
-      font-size: 18px;
-      border-radius: 16px;
-    }
-    .cta-note {
-      margin-top: 20px;
-      font-size: 13px;
-      color: var(--text-dim);
-    }
+    /* ── CTA FINAL ── */
+    .cta-end { background:var(--dark); text-align:center; }
+    .cta-inner { max-width:700px; margin:0 auto; padding:100px 24px; }
+    .cta-inner h2 { font-size:clamp(34px,5vw,58px); font-weight:900; letter-spacing:-1.5px; margin-bottom:20px; }
+    .cta-inner p { font-size:18px; color:var(--text-muted); margin-bottom:40px; line-height:1.7; }
+    .cta-note { margin-top:18px; font-size:13px; color:var(--text-muted); }
 
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 60px 24px 32px;
+    /* ── FOOTER ── */
+    footer { background:var(--dark); border-top:1px solid var(--border); padding:60px 24px 32px; }
+    .foot { max-width:1200px; margin:0 auto; }
+    .foot-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .foot-brand p { font-size:14px; color:var(--text-muted); margin-top:12px; line-height:1.7; max-width:260px; }
+    .foot-col h5 { font-size:14px; font-weight:800; margin-bottom:16px; }
+    .foot-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .foot-col a { font-size:14px; color:var(--text-muted); text-decoration:none; transition:color .2s; }
+    .foot-col a:hover { color:var(--green); }
+    .foot-bottom {
+      display:flex; align-items:center; justify-content:space-between;
+      border-top:1px solid var(--border); padding-top:24px; flex-wrap:wrap; gap:12px;
     }
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
+    .foot-bottom p { font-size:13px; color:var(--text-muted); }
+    .socials { display:flex; gap:10px; }
+    .soc {
+      width:36px; height:36px; background:rgba(255,255,255,0.04);
+      border:1px solid var(--border); border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      text-decoration:none; font-size:15px; transition:all .2s;
     }
-    .footer-top {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 48px;
-    }
-    .footer-brand p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 12px;
-      line-height: 1.7;
-      max-width: 260px;
-    }
-    .footer-col h5 {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col a {
-      font-size: 14px;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--text); }
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid var(--border);
-      padding-top: 24px;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-bottom p { font-size: 13px; color: var(--text-dim); }
-    .footer-socials { display: flex; gap: 12px; }
-    .social-link {
-      width: 36px; height: 36px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none;
-      font-size: 16px;
-      transition: all 0.2s;
-    }
-    .social-link:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-    }
-    .disclaimer {
-      max-width: 1200px;
-      margin: 24px auto 0;
-      padding: 0 24px;
-      font-size: 12px;
-      color: var(--text-dim);
-      line-height: 1.6;
-      text-align: center;
-    }
+    .soc:hover { background:var(--green); border-color:var(--green); }
+    .disclaimer { max-width:1200px; margin:24px auto 0; padding:0 24px; font-size:12px; color:var(--text-muted); text-align:center; line-height:1.6; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      .what-grid, .token-grid, .llave-grid { grid-template-columns: 1fr; gap: 40px; }
-      .steps { grid-template-columns: 1fr 1fr; }
-      .steps::before { display: none; }
-      .why-grid { grid-template-columns: 1fr; }
-      .faq-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
-      .nav-mobile-btn { display: block; }
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px) {
+      .what-grid,.token-grid,.llave-grid { grid-template-columns:1fr; gap:40px; }
+      .steps { grid-template-columns:1fr 1fr; }
+      .steps::before { display:none; }
+      .why-cards { grid-template-columns:1fr; }
+      .faq-grid { grid-template-columns:1fr; }
+      .foot-top { grid-template-columns:1fr 1fr; }
+      .nav-links { display:none; }
+      .nav-mobile-btn { display:block; }
       .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 68px; left: 0; right: 0;
-        background: rgba(10,10,15,0.97);
-        backdrop-filter: blur(20px);
-        padding: 24px;
-        border-bottom: 1px solid var(--border);
-        gap: 16px;
+        display:flex; flex-direction:column; position:fixed;
+        top:68px; left:0; right:0;
+        background:rgba(24,25,54,.97); backdrop-filter:blur(20px);
+        padding:24px; border-bottom:1px solid var(--border); gap:16px;
       }
     }
-
-    @media (max-width: 600px) {
-      .hero-stats { gap: 24px; }
-      .stat-divider { display: none; }
-      .token-cards { grid-template-columns: 1fr; }
-      .token-card.highlight { grid-column: span 1; }
-      .key-phases { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      .hero-ctas { flex-direction: column; align-items: center; }
-      .wp-ctas { flex-direction: column; align-items: center; }
+    @media(max-width:600px) {
+      .hero-stats { gap:24px; }
+      .stat-div { display:none; }
+      .token-cards { grid-template-columns:1fr; }
+      .tc.span2 { grid-column:span 1; }
+      .key-phases { grid-template-columns:1fr; }
+      .steps { grid-template-columns:1fr; }
+      .foot-top { grid-template-columns:1fr; }
+      .hero-ctas,.wp-ctas { flex-direction:column; align-items:center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="nav">
-    <div class="nav-inner">
-      <a href="#" class="logo">
-        <div class="logo-icon">🏠</div>
-        <span class="logo-text">Viven<span>Dapp</span></span>
-      </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#que-es">¿Qué es?</a></li>
-        <li><a href="#como-funciona">Cómo funciona</a></li>
-        <li><a href="#token">Token $VIVE</a></li>
-        <li><a href="#la-llave">La Llave</a></li>
-        <li><a href="#whitepaper">Whitepaper</a></li>
-        <li><a href="https://wa.me/573217480382?text=Hola%20VIVI" target="_blank" class="nav-cta">Empezar →</a></li>
-      </ul>
-      <button class="nav-mobile-btn" onclick="toggleMenu()" id="menuBtn">☰</button>
-    </div>
-  </nav>
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <!-- Logo SVG recreado con gradiente de marca -->
+      <svg class="logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#42BFEC"/>
+            <stop offset="100%" stop-color="#32BB75"/>
+          </linearGradient>
+        </defs>
+        <!-- Edificio izquierdo -->
+        <rect x="2" y="7" width="9" height="24" rx="1" stroke="url(#lg1)" stroke-width="2" fill="none"/>
+        <!-- Edificio central -->
+        <rect x="13" y="3" width="9" height="28" rx="1" stroke="url(#lg1)" stroke-width="2" fill="none"/>
+        <!-- Casa derecha -->
+        <path d="M24 31h8V20l-4-5-4 5v11z" stroke="url(#lg1)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        <!-- Señal WiFi -->
+        <circle cx="28" cy="11" r="1.5" fill="url(#lg1)"/>
+        <path d="M25.5 8.5a3.5 3.5 0 015 0" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M23.5 6.5a6 6 0 018 0" stroke="url(#lg1)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="logo-text"><span class="viven">Viven</span><span class="dapp">DApp</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#que-es">¿Qué es?</a></li>
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#token">Token $VIVE</a></li>
+      <li><a href="#la-llave">La Llave</a></li>
+      <li><a href="#whitepaper">Whitepaper</a></li>
+      <li><a href="https://wa.me/573217480382?text=Hola%20VIVI" target="_blank" class="nav-cta">Activar Llave →</a></li>
+    </ul>
+    <button class="nav-mobile-btn" onclick="toggleMenu()" id="menuBtn">☰</button>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-glow2"></div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Tokenización inmobiliaria en LATAM · Blockchain Polygon
-      </div>
-      <h1>
-        Tu pedazo de<br/>
-        <span class="gradient">LATAM en la blockchain</span>
-      </h1>
-      <p class="hero-sub">
-        Invierte en bienes raíces reales de Latinoamérica desde <strong style="color:var(--text)">$50 USD</strong>.
-        Sin intermediarios. Sin papeleo. Con la transparencia de la blockchain.
-      </p>
-      <div class="hero-ctas">
-        <a href="https://wa.me/573217480382?text=Hola%20VIVI" target="_blank" class="btn-primary">
-          🔑 Activar mi Llave
-        </a>
-        <a href="#whitepaper" class="btn-secondary">
-          📄 Leer Whitepaper
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-value">$50</div>
-          <div class="stat-label">Inversión mínima</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">$VIVE</div>
-          <div class="stat-label">Token nativo</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">500</div>
-          <div class="stat-label">$VIVE por referido</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">LATAM</div>
-          <div class="stat-label">Mercado objetivo</div>
-        </div>
-      </div>
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Tokenización inmobiliaria en LATAM · Blockchain Polygon
     </div>
-  </section>
-
-  <!-- QUÉ ES -->
-  <section class="what-is" id="que-es">
-    <div class="section-inner">
-      <span class="section-label">¿Qué es VivenDapp?</span>
-      <div class="what-grid">
-        <div class="what-visual">
-          <div class="building-card">
-            <div class="building-top">
-              <div class="building-icon">🏢</div>
-              <div class="building-info">
-                <h4>Torre Residencial Medellín</h4>
-                <p>Tokenizado en Polygon · Rendimiento anual ~12%</p>
-              </div>
-            </div>
-            <div class="building-chart">
-              <div class="bar" style="height:40%; animation-delay:0.1s"></div>
-              <div class="bar" style="height:55%; animation-delay:0.2s"></div>
-              <div class="bar" style="height:45%; animation-delay:0.3s"></div>
-              <div class="bar" style="height:70%; animation-delay:0.4s"></div>
-              <div class="bar" style="height:60%; animation-delay:0.5s"></div>
-              <div class="bar" style="height:85%; animation-delay:0.6s"></div>
-              <div class="bar" style="height:78%; animation-delay:0.7s"></div>
-              <div class="bar" style="height:100%; animation-delay:0.8s"></div>
-            </div>
-            <div class="building-tokens">
-              <span class="token-chip">500 $VIVE</span>
-              <span class="token-chip">Fracción: 0.1%</span>
-              <span class="token-chip">On-chain ✓</span>
-            </div>
-            <div class="floating-badge fb-1">
-              <span class="fb-dot"></span>
-              Rendimiento activo
-            </div>
-            <div class="floating-badge fb-2">
-              🔒 Smart Contract verificado
-            </div>
-          </div>
-        </div>
-        <div class="what-points">
-          <div class="what-point">
-            <div class="point-icon">🧱</div>
-            <div class="point-text">
-              <h4>Bienes raíces reales, en blockchain</h4>
-              <p>VivenDapp convierte propiedades físicas de LATAM en tokens digitales. Tú compras fracciones y te conviertes en co-propietario real — con respaldo legal y registro en blockchain.</p>
-            </div>
-          </div>
-          <div class="what-point">
-            <div class="point-icon">🌎</div>
-            <div class="point-text">
-              <h4>Diseñado para el mercado latinoamericano</h4>
-              <p>Las propiedades en Colombia, México, Perú y más países de LATAM históricamente valorizan entre 8–15% anual. VivenDapp te da acceso a esos rendimientos desde cualquier lugar del mundo.</p>
-            </div>
-          </div>
-          <div class="what-point">
-            <div class="point-icon">⚡</div>
-            <div class="point-text">
-              <h4>Sin barreras de entrada</h4>
-              <p>Antes necesitabas decenas de miles de dólares para invertir en finca raíz. Con VivenDapp empiezas con $50 USD. Sin bancos, sin trámites, sin fronteras.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CÓMO FUNCIONA -->
-  <section class="how" id="como-funciona">
-    <div class="section-inner" style="text-align:center">
-      <span class="section-label">Proceso</span>
-      <h2 class="section-title">Así de fácil funciona</h2>
-      <p class="section-sub" style="margin:0 auto 0">De WhatsApp a co-propietario en minutos.</p>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h4>Activa tu Llave</h4>
-          <p>Escanea el QR de tu llave física VivenDapp o escríbele a VIVI en WhatsApp con tu código. En 2 minutos estás registrado.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h4>Elige tu propiedad</h4>
-          <p>VIVI, nuestra IA, te guía por las propiedades disponibles según tu presupuesto y objetivos de ahorro.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h4>Adquiere tu fracción</h4>
-          <p>Compra tu porción con stablecoins (USDT/USDC) o pesos colombianos. Tu token queda registrado en blockchain Polygon.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">4</div>
-          <h4>Recibe rendimientos</h4>
-          <p>Gana por valorización y arriendo mensual. Todo transparente, todo on-chain. Puedes vender tu fracción cuando quieras.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOKEN $VIVE -->
-  <section class="token" id="token">
-    <div class="section-inner">
-      <span class="section-label">Token $VIVE</span>
-      <div class="token-grid">
-        <div>
-          <h2 class="section-title">El token que mueve el ecosistema</h2>
-          <p class="section-sub" style="margin-bottom:40px">
-            $VIVE no es solo una criptomoneda. Es tu membresía, tu voto y tu parte del pastel en el ecosistema inmobiliario más grande de LATAM.
-          </p>
-          <div class="token-cards">
-            <div class="token-card">
-              <div class="token-card-icon">🏦</div>
-              <h4>Respaldo real</h4>
-              <p>Cada $VIVE está respaldado por activos inmobiliarios físicos verificados en LATAM.</p>
-            </div>
-            <div class="token-card">
-              <div class="token-card-icon">🗳️</div>
-              <h4>Gobernanza</h4>
-              <p>Vota qué propiedades adquiere el protocolo. Tu $VIVE = tu voz en las decisiones.</p>
-            </div>
-            <div class="token-card">
-              <div class="token-card-icon">💸</div>
-              <h4>Rendimientos en $VIVE</h4>
-              <p>Recibe una parte de las rentas del protocolo directamente en tu wallet, automático.</p>
-            </div>
-            <div class="token-card">
-              <div class="token-card-icon">🎯</div>
-              <h4>Staking</h4>
-              <p>Bloquea tus $VIVE para ganar más rendimiento y acceder a propiedades exclusivas.</p>
-            </div>
-            <div class="token-card highlight">
-              <div class="token-card-icon">🤝</div>
-              <h4>Programa de referidos — 500 $VIVE gratis</h4>
-              <p>Cada persona que invites y se registre con tu código te da 500 $VIVE automáticamente. A ellos también les dan 500 $VIVE de bienvenida. Sin límites. Cuantos más traigas, más ganas.</p>
-            </div>
-          </div>
-        </div>
-        <div class="token-info">
-          <div class="token-visual">
-            <div class="vive-coin">$VIVE</div>
-            <div class="token-name">Token $VIVE</div>
-            <div class="token-desc">Red Polygon · ERC-20 compatible</div>
-          </div>
-          <div class="token-metrics">
-            <div class="metric">
-              <div class="metric-val">Polygon</div>
-              <div class="metric-key">Blockchain</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">ERC-20</div>
-              <div class="metric-key">Estándar</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">500</div>
-              <div class="metric-key">$VIVE bienvenida</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">Q3 2026</div>
-              <div class="metric-key">TGE estimado</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LA LLAVE -->
-  <section class="llave" id="la-llave">
-    <div class="section-inner">
-      <div class="llave-grid">
-        <div class="llave-visual">
-          <div class="key-mockup">
-            <span class="key-emoji">🔑</span>
-            <div class="key-code">VIVE0042</div>
-            <div class="key-sub">Tu llave al ecosistema VivenDapp</div>
-          </div>
-          <div class="key-phases">
-            <div class="key-phase">
-              <div class="phase-icon">💬</div>
-              <div class="phase-label">Onboarding WhatsApp</div>
-              <span class="phase-status active">Activo</span>
-            </div>
-            <div class="key-phase">
-              <div class="phase-icon">📱</div>
-              <div class="phase-label">Login App Móvil</div>
-              <span class="phase-status soon">Próximo</span>
-            </div>
-            <div class="key-phase">
-              <div class="phase-icon">🚪</div>
-              <div class="phase-label">Acceso Smart Door</div>
-              <span class="phase-status soon">Q4 2026</span>
-            </div>
-          </div>
-        </div>
-        <div class="llave-content">
-          <span class="section-label">La Llave</span>
-          <h2 class="section-title">Una llave física.<br/>Un universo digital.</h2>
-          <p class="section-sub">
-            Tu llave VivenDapp es más que un QR. Es tu identidad en el protocolo, tu acceso a la comunidad y — en el futuro — la llave literal de las propiedades en las que inviertes.
-          </p>
-          <div class="llave-points">
-            <div class="llave-point">
-              <span class="lp-icon">🔗</span>
-              <div class="lp-text">
-                <h5>Identificación única en blockchain</h5>
-                <p>Cada llave tiene un código único (VIVE####) registrado en Supabase y vinculado a tu wallet. No hay dos iguales.</p>
-              </div>
-            </div>
-            <div class="llave-point">
-              <span class="lp-icon">📲</span>
-              <div class="lp-text">
-                <h5>Onboarding en 2 minutos vía WhatsApp</h5>
-                <p>Escanea el QR → se abre WhatsApp con tu código pre-cargado → VIVI (nuestra IA) te registra en el acto.</p>
-              </div>
-            </div>
-            <div class="llave-point">
-              <span class="lp-icon">🏘️</span>
-              <div class="lp-text">
-                <h5>Acceso físico a propiedades VivenDapp</h5>
-                <p>En Q4 2026, la llave se convierte en credencial IoT para acceder a los inmuebles del protocolo. Sin apps adicionales, sin tarjetas.</p>
-              </div>
-            </div>
-            <div class="llave-point">
-              <span class="lp-icon">🎁</span>
-              <div class="lp-text">
-                <h5>500 $VIVE de bienvenida</h5>
-                <p>Al activar tu llave y completar el registro, recibes 500 $VIVE directamente en tu cuenta. Gratis.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- POR QUÉ LATAM -->
-  <section class="why" id="por-que">
-    <div class="section-inner">
-      <span class="section-label">La oportunidad</span>
-      <h2 class="section-title">¿Por qué bienes raíces<br/><span class="text-accent">en LATAM?</span></h2>
-      <p class="section-sub">El mercado inmobiliario latinoamericano es uno de los más estables y con mayor crecimiento del mundo. Ahora por primera vez es accesible para todos.</p>
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-num">$2.5T</div>
-          <h4>Mercado inmobiliario LATAM</h4>
-          <p>El sector inmobiliario de América Latina mueve más de 2.5 billones de dólares anuales — y menos del 1% está tokenizado. El espacio para crecer es enorme.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-num">8–15%</div>
-          <h4>Valorización anual promedio</h4>
-          <p>En ciudades como Medellín, Bogotá, Lima y Ciudad de México, el valor de los inmuebles ha crecido consistentemente entre 8% y 15% anual en la última década.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-num">650M</div>
-          <h4>Personas sin acceso real</h4>
-          <p>Más de 650 millones de latinoamericanos nunca han podido invertir en finca raíz por barreras de capital, burocracia o ubicación. VivenDapp existe para cambiar eso.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHITEPAPER -->
-  <section class="whitepaper" id="whitepaper">
-    <div class="wp-inner">
-      <span class="wp-icon">📄</span>
-      <h2 class="section-title">Lee el Whitepaper</h2>
-      <p>
-        Todos los detalles técnicos, la tokenómica de $VIVE, la arquitectura del protocolo y el modelo legal están documentados en nuestro Whitepaper. Sin letra pequeña.
-      </p>
-      <div class="wp-ctas">
-        <a href="https://vivendapp.io/whitepaper.pdf" target="_blank" class="btn-primary">
-          📄 Descargar Whitepaper
-        </a>
-        <a href="https://wa.me/573217480382?text=Quiero%20saber%20mas%20sobre%20VivenDapp" target="_blank" class="btn-secondary">
-          💬 Hablar con VIVI
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq" id="faq">
-    <div class="section-inner">
-      <span class="section-label">Preguntas frecuentes</span>
-      <h2 class="section-title">Todo lo que quieres saber</h2>
-      <div class="faq-grid">
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Necesito saber de cripto para invertir?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>No. VivenDapp está diseñado para funcionar aunque nunca hayas tocado una wallet. VIVI, nuestra IA, te guía paso a paso. Si ya sabes de cripto, puedes conectar tu propia wallet y tomar el control total.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Cómo sé que la propiedad es real?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Cada propiedad en VivenDapp pasa por un proceso de due diligence legal y técnico. Los documentos, escrituras y valoraciones están vinculados al smart contract del token. Cualquiera puede auditarlos en blockchain.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Qué pasa si quiero retirar mi inversión?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Puedes vender tus tokens en el mercado secundario del protocolo en cualquier momento. La liquidez depende del mercado, pero el diseño del protocolo incluye mecanismos para facilitar la salida ordenada.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿En qué blockchain está $VIVE?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>$VIVE opera en Polygon, una red compatible con Ethereum pero con comisiones muy bajas (centavos de dólar por transacción). Esto hace que invertir $50 no se coma en fees. Los contratos serán auditados antes del TGE.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Qué es el token $VIVE exactamente?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>$VIVE es el token de utilidad y gobernanza del protocolo VivenDapp. Te da derecho a votar, acceder a propiedades exclusivas, recibir parte de los rendimientos del protocolo y participar en el programa de referidos.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Cómo funciona el programa de referidos?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Al registrarte recibes un código único. Por cada persona que se una usando tu código, ambos reciben 500 $VIVE automáticamente. No hay límite de referidos — cuantos más traigas, más ganas. Los tokens se acreditan al instante.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Está regulado? ¿Es legal en Colombia?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>VivenDapp está estructurando su marco legal con abogados especializados en blockchain en Colombia. Operamos bajo los principios de transparencia y cumplimiento regulatorio. El whitepaper detalla la estructura legal en construcción.</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            ¿Cuándo puedo comprar $VIVE en el mercado?
-            <span class="faq-arrow">+</span>
-          </button>
-          <div class="faq-a">
-            <p>El TGE (Token Generation Event) está planificado para Q3 2026. Por ahora puedes acumular $VIVE gratis a través de registros y referidos. Los primeros usuarios tendrán ventajas exclusivas en la venta inicial.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="cta-final">
-    <div class="cta-final-inner">
-      <h2>Tu llave te espera.<br/><span class="gradient" style="background:linear-gradient(135deg,var(--primary-light),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¿La activas hoy?</span></h2>
-      <p>Únete a los primeros inversores del protocolo inmobiliario más ambicioso de Latinoamérica. Empieza con tu llave, crece con la comunidad.</p>
-      <a href="https://wa.me/573217480382?text=Hola%20VIVI%2C%20quiero%20activar%20mi%20llave" target="_blank" class="btn-primary">
-        🔑 Activar mi Llave ahora
-      </a>
-      <p class="cta-note">Gratis · Sin wallet requerida · En 2 minutos vía WhatsApp</p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="#" class="logo">
-            <div class="logo-icon">🏠</div>
-            <span class="logo-text">Viven<span>Dapp</span></span>
-          </a>
-          <p>El protocolo de tokenización inmobiliaria más accesible de LATAM. Blockchain, sin complicaciones.</p>
-        </div>
-        <div class="footer-col">
-          <h5>Protocolo</h5>
-          <ul>
-            <li><a href="#que-es">¿Qué es?</a></li>
-            <li><a href="#como-funciona">Cómo funciona</a></li>
-            <li><a href="#la-llave">La Llave</a></li>
-            <li><a href="#por-que">Por qué LATAM</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Token</h5>
-          <ul>
-            <li><a href="#token">Token $VIVE</a></li>
-            <li><a href="#whitepaper">Whitepaper</a></li>
-            <li><a href="#faq">FAQ</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Comunidad</h5>
-          <ul>
-            <li><a href="https://wa.me/573217480382" target="_blank">WhatsApp VIVI</a></li>
-            <li><a href="#" target="_blank">Telegram</a></li>
-            <li><a href="#" target="_blank">Twitter / X</a></li>
-            <li><a href="#" target="_blank">LinkedIn</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 VivenDapp · vivendapp.io · Todos los derechos reservados</p>
-        <div class="footer-socials">
-          <a href="https://wa.me/573217480382" target="_blank" class="social-link">💬</a>
-          <a href="#" target="_blank" class="social-link">🐦</a>
-          <a href="#" target="_blank" class="social-link">📱</a>
-          <a href="#" target="_blank" class="social-link">💼</a>
-        </div>
-      </div>
-    </div>
-    <p class="disclaimer">
-      ⚠️ Los tokens $VIVE son tokens de utilidad. No constituyen oferta de valores ni instrumento financiero regulado. Invertir en criptoactivos conlleva riesgos. El protocolo VivenDapp está en fase de desarrollo. Lee el Whitepaper antes de participar.
+    <h1>
+      Tu pedazo de<br/>
+      <span class="grad-text">LATAM en la blockchain</span>
+    </h1>
+    <p class="hero-sub">
+      Invierte en bienes raíces reales de Latinoamérica desde <strong>$50 USD</strong>.
+      Sin intermediarios. Sin papeleo. Con la transparencia de la blockchain.
     </p>
-  </footer>
+    <div class="hero-ctas">
+      <a href="https://wa.me/573217480382?text=Hola%20VIVI" target="_blank" class="btn-primary">🔑 Activar mi Llave</a>
+      <a href="#whitepaper" class="btn-secondary">📄 Leer Whitepaper</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-value">$50</div><div class="stat-label">Inversión mínima</div></div>
+      <div class="stat-div"></div>
+      <div class="stat"><div class="stat-value">$VIVE</div><div class="stat-label">Token nativo</div></div>
+      <div class="stat-div"></div>
+      <div class="stat"><div class="stat-value">500</div><div class="stat-label">$VIVE por referido</div></div>
+      <div class="stat-div"></div>
+      <div class="stat"><div class="stat-value">LATAM</div><div class="stat-label">Mercado objetivo</div></div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // NAV scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    });
+<!-- ── QUÉ ES ── -->
+<section class="what" id="que-es">
+  <div class="sec">
+    <span class="sec-label">¿Qué es VivenDapp?</span>
+    <div class="what-grid">
+      <div style="position:relative">
+        <div class="card-glass">
+          <div class="building-top">
+            <div class="building-img-placeholder">🏢</div>
+            <div class="building-info">
+              <h4>Torre Residencial Medellín</h4>
+              <p>Tokenizado en Polygon · Rendimiento ~12% anual</p>
+            </div>
+          </div>
+          <div class="chart-bars">
+            <div class="bar" style="height:40%;animation-delay:.1s"></div>
+            <div class="bar" style="height:58%;animation-delay:.2s"></div>
+            <div class="bar" style="height:45%;animation-delay:.3s"></div>
+            <div class="bar" style="height:72%;animation-delay:.4s"></div>
+            <div class="bar" style="height:62%;animation-delay:.5s"></div>
+            <div class="bar" style="height:88%;animation-delay:.6s"></div>
+            <div class="bar" style="height:78%;animation-delay:.7s"></div>
+            <div class="bar" style="height:100%;animation-delay:.8s"></div>
+          </div>
+          <div class="chip-row">
+            <span class="chip">500 $VIVE</span>
+            <span class="chip">Fracción 0.1%</span>
+            <span class="chip">On-chain ✓</span>
+          </div>
+          <div class="fb fb-1"><span class="fb-dot"></span>Rendimiento activo</div>
+          <div class="fb fb-2">🔒 Smart Contract verificado</div>
+        </div>
+      </div>
+      <div class="what-points">
+        <div class="what-point">
+          <div class="pt-icon">🧱</div>
+          <div class="pt-text">
+            <h4>Bienes raíces reales, en blockchain</h4>
+            <p>VivenDapp convierte propiedades físicas de LATAM en tokens digitales. Tú compras fracciones y eres co-propietario real — con respaldo legal y registro en Polygon.</p>
+          </div>
+        </div>
+        <div class="what-point">
+          <div class="pt-icon">🌎</div>
+          <div class="pt-text">
+            <h4>Diseñado para el mercado latinoamericano</h4>
+            <p>Colombia, México, Perú y más países crecen entre 8–15% anual en finca raíz. VivenDapp te da acceso a esos rendimientos desde cualquier lugar del mundo.</p>
+          </div>
+        </div>
+        <div class="what-point">
+          <div class="pt-icon">⚡</div>
+          <div class="pt-text">
+            <h4>Sin barreras de entrada</h4>
+            <p>Antes necesitabas miles de dólares para invertir en inmuebles. Con VivenDapp empiezas con $50 USD, sin bancos ni trámites.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Mobile menu
-    function toggleMenu() {
-      const links = document.getElementById('navLinks');
-      const btn = document.getElementById('menuBtn');
-      links.classList.toggle('open');
-      btn.textContent = links.classList.contains('open') ? '✕' : '☰';
-    }
+<!-- ── CÓMO FUNCIONA ── -->
+<section class="how" id="como-funciona">
+  <div class="sec" style="text-align:center">
+    <span class="sec-label">Proceso</span>
+    <h2 class="sec-title">Así de fácil funciona</h2>
+    <p class="sec-sub" style="margin:0 auto">De WhatsApp a co-propietario en minutos.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Activa tu Llave</h4>
+        <p>Escanea el QR de tu llave VivenDapp o escríbele a VIVI en WhatsApp con tu código VIVE####. En 2 minutos estás registrado.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Elige tu propiedad</h4>
+        <p>VIVI, nuestra IA, te guía por las propiedades disponibles según tu presupuesto y objetivos de ahorro.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Adquiere tu fracción</h4>
+        <p>Compra con USDT/USDC o pesos colombianos. Tu token $VIVE queda registrado en blockchain Polygon.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Recibe rendimientos</h4>
+        <p>Gana por valorización y arriendo mensual. Todo transparente, todo on-chain. Vende cuando quieras.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Close menu on link click
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.addEventListener('click', () => {
-        document.getElementById('navLinks').classList.remove('open');
-        document.getElementById('menuBtn').textContent = '☰';
-      });
-    });
+<!-- ── TOKEN $VIVE ── -->
+<section class="token" id="token">
+  <div class="sec">
+    <span class="sec-label">Token $VIVE</span>
+    <div class="token-grid">
+      <div>
+        <h2 class="sec-title">El token que mueve el ecosistema</h2>
+        <p class="sec-sub" style="margin-bottom:40px">$VIVE no es solo una criptomoneda. Es tu membresía, tu voto y tu parte del ecosistema inmobiliario más grande de LATAM.</p>
+        <div class="token-cards">
+          <div class="tc"><div class="tc-icon">🏦</div><h4>Respaldo real</h4><p>Cada $VIVE está respaldado por activos inmobiliarios físicos verificados en LATAM.</p></div>
+          <div class="tc"><div class="tc-icon">🗳️</div><h4>Gobernanza</h4><p>Vota qué propiedades adquiere el protocolo. Tu $VIVE = tu voz.</p></div>
+          <div class="tc"><div class="tc-icon">💸</div><h4>Rendimientos</h4><p>Recibe parte de las rentas del protocolo directamente en tu wallet, automático.</p></div>
+          <div class="tc"><div class="tc-icon">🎯</div><h4>Staking</h4><p>Bloquea $VIVE para ganar más rendimiento y acceder a propiedades exclusivas.</p></div>
+          <div class="tc span2"><div class="tc-icon">🤝</div><h4>Programa de referidos — 500 $VIVE gratis</h4><p>Cada persona que invites recibe 500 $VIVE automáticamente al registrarse. Tú también ganas 500 $VIVE por cada referido exitoso. Sin límite de invitados.</p></div>
+        </div>
+      </div>
+      <div style="position:sticky;top:100px">
+        <div class="coin-box">
+          <div class="coin">$VIVE</div>
+          <div class="coin-name">Token $VIVE</div>
+          <div class="coin-sub">Red Polygon · ERC-20 compatible</div>
+        </div>
+        <div class="metrics">
+          <div class="met"><div class="met-val">Polygon</div><div class="met-key">Blockchain</div></div>
+          <div class="met"><div class="met-val">ERC-20</div><div class="met-key">Estándar</div></div>
+          <div class="met"><div class="met-val">500</div><div class="met-key">$VIVE bienvenida</div></div>
+          <div class="met"><div class="met-val">Q3 2026</div><div class="met-key">TGE estimado</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // FAQ accordion
-    function toggleFaq(btn) {
-      const item = btn.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    }
+<!-- ── LA LLAVE ── -->
+<section class="llave" id="la-llave">
+  <div class="sec">
+    <div class="llave-grid">
+      <div>
+        <div class="key-mock">
+          <span class="key-emoji">🔑</span>
+          <div class="key-code">VIVE0042</div>
+          <div class="key-sub">Tu llave al ecosistema VivenDapp</div>
+        </div>
+        <div class="key-phases">
+          <div class="kp"><div class="kp-icon">💬</div><div class="kp-label">WhatsApp</div><span class="badge-on">Activo</span></div>
+          <div class="kp"><div class="kp-icon">📱</div><div class="kp-label">App Móvil</div><span class="badge-soon">Próximo</span></div>
+          <div class="kp"><div class="kp-icon">🚪</div><div class="kp-label">Smart Door</div><span class="badge-soon">Q4 2026</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="sec-label">La Llave</span>
+        <h2 class="sec-title" style="margin-bottom:16px">Una llave física.<br/>Un universo digital.</h2>
+        <p class="sec-sub" style="margin-bottom:32px">Tu llave VivenDapp es más que un QR. Es tu identidad en el protocolo, tu acceso a la comunidad y — en el futuro — la llave literal de los inmuebles en los que inviertes.</p>
+        <div class="lp-list">
+          <div class="lp"><span class="lp-ico">🔗</span><div><h5>Identidad única en blockchain</h5><p>Cada llave tiene un código único (VIVE####) registrado en Supabase y vinculado a tu wallet. No hay dos iguales.</p></div></div>
+          <div class="lp"><span class="lp-ico">📲</span><div><h5>Onboarding en 2 minutos vía WhatsApp</h5><p>Escanea el QR → abre WhatsApp con tu código pre-cargado → VIVI te registra en el acto y te da acceso a la app.</p></div></div>
+          <div class="lp"><span class="lp-ico">🏘️</span><div><h5>Acceso físico a propiedades VivenDapp</h5><p>En Q4 2026, la llave se convierte en credencial IoT para acceder a los inmuebles del protocolo.</p></div></div>
+          <div class="lp"><span class="lp-ico">🎁</span><div><h5>500 $VIVE de bienvenida</h5><p>Al activar tu llave y completar el registro, recibes 500 $VIVE directo en tu cuenta. Gratis.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Intersection observer for animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+<!-- ── POR QUÉ LATAM ── -->
+<section class="why" id="por-que">
+  <div class="sec">
+    <span class="sec-label">La oportunidad</span>
+    <h2 class="sec-title">¿Por qué bienes raíces en LATAM?</h2>
+    <p class="sec-sub">El mercado inmobiliario latinoamericano es uno de los más estables del mundo. Ahora por primera vez es accesible para todos.</p>
+    <div class="why-cards">
+      <div class="wc"><div class="wc-num">$2.5T</div><h4>Mercado inmobiliario LATAM</h4><p>El sector inmobiliario de América Latina mueve más de 2.5 billones anuales — menos del 1% está tokenizado. El espacio para crecer es enorme.</p></div>
+      <div class="wc"><div class="wc-num">8–15%</div><h4>Valorización anual promedio</h4><p>En Medellín, Bogotá, Lima y CDMX, el valor de los inmuebles ha crecido consistentemente entre 8% y 15% anual en la última década.</p></div>
+      <div class="wc"><div class="wc-num">650M</div><h4>Personas sin acceso real</h4><p>Más de 650 millones de latinoamericanos nunca han podido invertir en finca raíz. VivenDapp existe para cambiar eso.</p></div>
+    </div>
+  </div>
+</section>
 
-    document.querySelectorAll('.step, .why-card, .token-card, .llave-point, .what-point').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      observer.observe(el);
-    });
-  </script>
+<!-- ── WHITEPAPER ── -->
+<section class="wp" id="whitepaper">
+  <div class="wp-inner">
+    <span class="wp-icon">📄</span>
+    <h2 class="sec-title">Lee el Whitepaper</h2>
+    <p>Todos los detalles técnicos, la tokenómica de $VIVE, la arquitectura del protocolo y el modelo legal. Sin letra pequeña.</p>
+    <div class="wp-ctas">
+      <a href="https://vivendapp.io/whitepaper.pdf" target="_blank" class="btn-primary">📄 Descargar Whitepaper</a>
+      <a href="https://wa.me/573217480382?text=Quiero%20saber%20mas%20sobre%20VivenDapp" target="_blank" class="btn-secondary">💬 Hablar con VIVI</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq" id="faq">
+  <div class="sec">
+    <span class="sec-label">Preguntas frecuentes</span>
+    <h2 class="sec-title">Todo lo que quieres saber</h2>
+    <div class="faq-grid">
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Necesito saber de cripto para invertir?<span class="faq-arrow">+</span></button><div class="faq-a"><p>No. VivenDapp está diseñado para funcionar aunque nunca hayas tocado una wallet. VIVI te guía paso a paso. Si ya sabes de cripto, puedes conectar tu propia wallet y tomar el control total.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Cómo sé que la propiedad es real?<span class="faq-arrow">+</span></button><div class="faq-a"><p>Cada propiedad pasa por due diligence legal y técnico. Los documentos, escrituras y valoraciones están vinculados al smart contract. Cualquiera puede auditarlos en blockchain.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Qué pasa si quiero retirar mi inversión?<span class="faq-arrow">+</span></button><div class="faq-a"><p>Puedes vender tus tokens en el mercado secundario del protocolo en cualquier momento. El diseño incluye mecanismos para facilitar la salida ordenada.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿En qué blockchain está $VIVE?<span class="faq-arrow">+</span></button><div class="faq-a"><p>$VIVE opera en Polygon, compatible con Ethereum pero con comisiones de centavos por transacción. Esto hace que invertir $50 no se consuma en fees. Los contratos serán auditados antes del TGE.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Qué es el token $VIVE exactamente?<span class="faq-arrow">+</span></button><div class="faq-a"><p>$VIVE es el token de utilidad y gobernanza del protocolo. Te da derecho a votar, acceder a propiedades exclusivas, recibir rendimientos del protocolo y participar en el programa de referidos.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Cómo funciona el programa de referidos?<span class="faq-arrow">+</span></button><div class="faq-a"><p>Al registrarte recibes un código único. Por cada persona que se una con tu código, ambos reciben 500 $VIVE automáticamente. Sin límite de referidos — cuantos más traigas, más ganas.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Es legal en Colombia?<span class="faq-arrow">+</span></button><div class="faq-a"><p>VivenDapp está estructurando su marco legal con abogados especializados en blockchain en Colombia. Operamos bajo principios de transparencia y cumplimiento regulatorio.</p></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="faq(this)">¿Cuándo puedo comprar $VIVE en el mercado?<span class="faq-arrow">+</span></button><div class="faq-a"><p>El TGE está planificado para Q3 2026. Por ahora acumulas $VIVE gratis con registros y referidos. Los primeros usuarios tendrán ventajas exclusivas en la venta inicial.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="cta-end">
+  <div class="cta-inner">
+    <h2>Tu llave te espera.<br/><span class="grad-text" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">¿La activas hoy?</span></h2>
+    <p>Únete a los primeros inversores del protocolo inmobiliario más ambicioso de Latinoamérica.</p>
+    <a href="https://wa.me/573217480382?text=Hola%20VIVI%2C%20quiero%20activar%20mi%20llave" target="_blank" class="btn-primary" style="font-size:18px;padding:20px 48px;border-radius:16px">
+      🔑 Activar mi Llave ahora
+    </a>
+    <p class="cta-note">Gratis · Sin wallet requerida · En 2 minutos vía WhatsApp</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="foot">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <svg class="logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#42BFEC"/><stop offset="100%" stop-color="#32BB75"/></linearGradient></defs>
+            <rect x="2" y="7" width="9" height="24" rx="1" stroke="url(#lg2)" stroke-width="2" fill="none"/>
+            <rect x="13" y="3" width="9" height="28" rx="1" stroke="url(#lg2)" stroke-width="2" fill="none"/>
+            <path d="M24 31h8V20l-4-5-4 5v11z" stroke="url(#lg2)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+            <circle cx="28" cy="11" r="1.5" fill="url(#lg2)"/>
+            <path d="M25.5 8.5a3.5 3.5 0 015 0" stroke="url(#lg2)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M23.5 6.5a6 6 0 018 0" stroke="url(#lg2)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+          <span class="logo-text"><span class="viven">Viven</span><span class="dapp">DApp</span></span>
+        </a>
+        <p>El protocolo de tokenización inmobiliaria más accesible de LATAM. Blockchain, sin complicaciones.</p>
+      </div>
+      <div class="foot-col"><h5>Protocolo</h5><ul><li><a href="#que-es">¿Qué es?</a></li><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#la-llave">La Llave</a></li><li><a href="#por-que">Por qué LATAM</a></li></ul></div>
+      <div class="foot-col"><h5>Token</h5><ul><li><a href="#token">Token $VIVE</a></li><li><a href="#whitepaper">Whitepaper</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div class="foot-col"><h5>Comunidad</h5><ul><li><a href="https://wa.me/573217480382" target="_blank">WhatsApp VIVI</a></li><li><a href="#" target="_blank">Telegram</a></li><li><a href="#" target="_blank">Twitter / X</a></li><li><a href="#" target="_blank">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 VivenDapp · vivendapp.io · Todos los derechos reservados</p>
+      <div class="socials">
+        <a href="https://wa.me/573217480382" target="_blank" class="soc">💬</a>
+        <a href="#" target="_blank" class="soc">🐦</a>
+        <a href="#" target="_blank" class="soc">📱</a>
+        <a href="#" target="_blank" class="soc">💼</a>
+      </div>
+    </div>
+  </div>
+  <p class="disclaimer">⚠️ Los tokens $VIVE son tokens de utilidad. No constituyen oferta de valores ni instrumento financiero regulado. Invertir en criptoactivos conlleva riesgos. El protocolo VivenDapp está en fase de desarrollo. Lee el Whitepaper antes de participar.</p>
+</footer>
+
+<script>
+  // Nav scroll
+  window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+  // Mobile menu
+  function toggleMenu(){
+    const l=document.getElementById('navLinks'),b=document.getElementById('menuBtn');
+    l.classList.toggle('open'); b.textContent=l.classList.contains('open')?'✕':'☰';
+  }
+  document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('menuBtn').textContent='☰';
+  }));
+  // FAQ
+  function faq(btn){
+    const item=btn.parentElement, open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(el=>el.classList.remove('open'));
+    if(!open) item.classList.add('open');
+  }
+  // Fade-in on scroll
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
+  }),{threshold:.1,rootMargin:'0 0 -40px 0'});
+  document.querySelectorAll('.step,.wc,.tc,.lp,.what-point').forEach(el=>{
+    el.style.opacity='0';el.style.transform='translateY(20px)';
+    el.style.transition='opacity .5s ease,transform .5s ease';
+    obs.observe(el);
+  });
+</script>
 </body>
 </html>
