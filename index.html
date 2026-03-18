@@ -434,6 +434,87 @@
       .foot-top { grid-template-columns:1fr; }
       .hero-ctas,.wp-ctas { flex-direction:column; align-items:center; }
     }
+
+    /* ── TIERS DE LLAVEROS ── */
+    .tiers-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:20px; margin-bottom:48px; text-align:left;
+    }
+    .tier-card {
+      background:rgba(255,255,255,0.03); border:1.5px solid var(--border);
+      border-radius:var(--radius-lg); padding:28px 22px;
+      position:relative; overflow:hidden; transition:all .3s;
+      display:flex; flex-direction:column;
+    }
+    .tier-card:hover { transform:translateY(-6px); }
+    .tier-card.founders { border-color:rgba(255,215,0,.25); background:rgba(255,215,0,.03); }
+    .tier-card.founders:hover { border-color:rgba(255,215,0,.5); box-shadow:0 12px 40px rgba(255,215,0,.1); }
+    .tier-card.early   { border-color:rgba(66,191,236,.25); }
+    .tier-card.early:hover { border-color:rgba(66,191,236,.5); }
+    .tier-card.comunidad { border-color:rgba(54,189,175,.25); }
+    .tier-card.general   { border-color:rgba(242,244,244,.1); }
+    .tier-badge {
+      font-size:13px; font-weight:800; margin-bottom:8px;
+    }
+    .tier-card.founders .tier-badge { color:#FFD700; }
+    .tier-card.early .tier-badge    { color:var(--blue); }
+    .tier-card.comunidad .tier-badge{ color:var(--teal); }
+    .tier-card.general .tier-badge  { color:var(--text-muted); }
+    .tier-material {
+      font-size:12px; color:var(--text-muted); margin-bottom:12px;
+      font-weight:600; text-transform:uppercase; letter-spacing:1px;
+    }
+    .tier-num { font-size:11px; color:var(--text-muted); margin-bottom:16px; }
+    .tier-price {
+      font-family:'Nunito',sans-serif; font-size:42px; font-weight:900;
+      line-height:1; margin-bottom:4px;
+      background:var(--grad); -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .tier-price span { font-size:16px; }
+    .tier-cop { font-size:12px; color:var(--text-muted); margin-bottom:14px; }
+    .tier-vive {
+      font-family:'Nunito',sans-serif; font-size:18px; font-weight:900;
+      color:var(--green); margin-bottom:4px;
+    }
+    .tier-vesting { font-size:12px; color:var(--text-muted); margin-bottom:4px; }
+    .tier-implied {
+      font-size:11px; color:var(--teal); font-weight:700;
+      margin-bottom:20px; padding:6px 10px;
+      background:rgba(54,189,175,.08); border-radius:8px;
+    }
+    .tier-perks {
+      list-style:none; display:flex; flex-direction:column;
+      gap:8px; margin-bottom:24px; flex:1;
+    }
+    .tier-perks li { font-size:13px; color:var(--text-muted); }
+    .tier-btn {
+      display:block; text-align:center; padding:14px 16px;
+      border-radius:12px; text-decoration:none; font-weight:800;
+      font-size:13px; transition:all .2s; margin-bottom:10px;
+    }
+    .founders-btn { background:linear-gradient(135deg,#B8860B,#FFD700); color:#181936; }
+    .early-btn    { background:var(--grad); color:var(--dark); }
+    .comunidad-btn{ background:rgba(54,189,175,.15); color:var(--teal); border:1.5px solid rgba(54,189,175,.3); }
+    .general-btn  { background:rgba(242,244,244,.06); color:var(--light); border:1.5px solid rgba(242,244,244,.15); }
+    .tier-btn:hover { transform:translateY(-2px); filter:brightness(1.1); }
+    .tier-supply { font-size:11px; color:var(--text-muted); text-align:center; }
+    .payment-row {
+      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+      justify-content:center; padding:24px; margin-top:12px;
+      background:rgba(255,255,255,.02); border:1px solid var(--border);
+      border-radius:var(--radius);
+    }
+    .pay-label { font-size:13px; color:var(--text-muted); font-weight:600; }
+    .pay-methods { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+    .pay-chip {
+      background:rgba(255,255,255,.05); border:1px solid var(--border);
+      padding:8px 16px; border-radius:100px; font-size:13px; font-weight:700;
+    }
+    .pay-chip.soon { opacity:.5; }
+    @media(max-width:1100px) { .tiers-grid { grid-template-columns:1fr 1fr; } }
+    @media(max-width:600px)  { .tiers-grid { grid-template-columns:1fr; } }
+
   </style>
 </head>
 <body>
@@ -471,6 +552,7 @@
       <li><a href="#como-funciona">Cómo funciona</a></li>
       <li><a href="#token">Token $VIVE</a></li>
       <li><a href="#la-llave">La Llave</a></li>
+      <li><a href="#compra">Comprar</a></li>
       <li><a href="#whitepaper">Whitepaper</a></li>
       <li><a href="https://wa.me/573217480382?text=Hola%20VIVI" target="_blank" class="nav-cta">Activar Llave →</a></li>
     </ul>
@@ -693,6 +775,114 @@
   </div>
 </section>
 
+
+<!-- ── COMPRA TU LLAVERO ── -->
+<section id="compra" style="background:var(--dark2)">
+  <div class="sec" style="text-align:center">
+    <span class="sec-label">Llaveros VivenDapp</span>
+    <h2 class="sec-title">Elige tu nivel de acceso</h2>
+    <p class="sec-sub" style="margin:0 auto 60px">Cada llavero es un producto físico único con tokens $VIVE pre-asignados con vesting. Cuanto más temprano entras, mejor precio implícito por token.</p>
+
+    <div class="tiers-grid">
+
+      <!-- T1 Founders -->
+      <div class="tier-card founders">
+        <div class="tier-badge">👑 Solo 100 en el mundo</div>
+        <div class="tier-material">Metal grabado láser</div>
+        <div class="tier-num">VIVE0001–0100</div>
+        <div class="tier-price">$100 <span>USD</span></div>
+        <div class="tier-cop">~$420.000 COP</div>
+        <div class="tier-vive">100.000 $VIVE</div>
+        <div class="tier-vesting">Vesting 24 meses · Cliff 3 meses</div>
+        <div class="tier-implied">Precio implícito: $0,001/VIVE</div>
+        <ul class="tier-perks">
+          <li>🏆 Badge "Founder" permanente</li>
+          <li>🗳️ Voto doble en gobernanza</li>
+          <li>🏘️ Acceso propiedades 72h antes</li>
+          <li>💎 Nombre en Pared de Fundadores</li>
+          <li>📞 Canal directo con el equipo</li>
+        </ul>
+        <a href="https://wa.me/573217480382?text=Quiero%20un%20llavero%20Founders%20VIVE%20%23%23%23%23" target="_blank" class="tier-btn founders-btn">Quiero ser Founder →</a>
+        <div class="tier-supply" id="founders-supply">Disponibilidad cargando...</div>
+      </div>
+
+      <!-- T2 Early Access -->
+      <div class="tier-card early">
+        <div class="tier-badge">🥇 Early Access</div>
+        <div class="tier-material">Piel premium</div>
+        <div class="tier-num">VIVE0101–0500</div>
+        <div class="tier-price">$50 <span>USD</span></div>
+        <div class="tier-cop">~$210.000 COP</div>
+        <div class="tier-vive">40.000 $VIVE</div>
+        <div class="tier-vesting">Vesting 18 meses · Cliff 2 meses</div>
+        <div class="tier-implied">Precio implícito: $0,00125/VIVE</div>
+        <ul class="tier-perks">
+          <li>🏅 Badge "Early Adopter"</li>
+          <li>🏘️ Acceso propiedades 24h antes</li>
+          <li>✅ Whitelist garantizada TGE</li>
+          <li>🎯 2x multiplicador de referidos</li>
+        </ul>
+        <a href="https://wa.me/573217480382?text=Quiero%20un%20llavero%20Early%20Access" target="_blank" class="tier-btn early-btn">Quiero Early Access →</a>
+        <div class="tier-supply" id="early-supply">Disponibilidad cargando...</div>
+      </div>
+
+      <!-- T3 Comunidad -->
+      <div class="tier-card comunidad">
+        <div class="tier-badge">🥈 Comunidad</div>
+        <div class="tier-material">Piel estándar</div>
+        <div class="tier-num">VIVE0501–2500</div>
+        <div class="tier-price">$25 <span>USD</span></div>
+        <div class="tier-cop">~$105.000 COP</div>
+        <div class="tier-vive">15.000 $VIVE</div>
+        <div class="tier-vesting">Vesting 12 meses · Cliff 1 mes</div>
+        <div class="tier-implied">Precio implícito: $0,00167/VIVE</div>
+        <ul class="tier-perks">
+          <li>🏠 Acceso completo a la plataforma</li>
+          <li>💸 5% descuento en fees</li>
+          <li>🎯 1,5x multiplicador de referidos</li>
+        </ul>
+        <a href="https://wa.me/573217480382?text=Quiero%20un%20llavero%20Comunidad" target="_blank" class="tier-btn comunidad-btn">Unirme a la Comunidad →</a>
+        <div class="tier-supply" id="comunidad-supply">Disponibilidad cargando...</div>
+      </div>
+
+      <!-- T4 General -->
+      <div class="tier-card general">
+        <div class="tier-badge">🥉 General</div>
+        <div class="tier-material">PVC con QR</div>
+        <div class="tier-num">VIVE2501+</div>
+        <div class="tier-price">$10 <span>USD</span></div>
+        <div class="tier-cop">~$42.000 COP</div>
+        <div class="tier-vive">5.000 $VIVE</div>
+        <div class="tier-vesting">Vesting 6 meses</div>
+        <div class="tier-implied">Precio implícito: $0,002/VIVE</div>
+        <ul class="tier-perks">
+          <li>📱 Acceso completo a VivenDapp</li>
+          <li>🤝 Programa de referidos estándar</li>
+        </ul>
+        <a href="https://wa.me/573217480382?text=Quiero%20mi%20llavero%20VivenDapp" target="_blank" class="tier-btn general-btn">Obtener mi Llavero →</a>
+        <div class="tier-supply" id="general-supply">Ilimitado</div>
+      </div>
+
+    </div>
+
+    <!-- Métodos de pago -->
+    <div class="payment-row">
+      <span class="pay-label">Métodos de pago aceptados:</span>
+      <div class="pay-methods">
+        <div class="pay-chip">🏦 Referencia Bancaria</div>
+        <div class="pay-chip">₿ Crypto (USDT/USDC)</div>
+        <div class="pay-chip">💳 Tarjeta (Wompi)</div>
+        <div class="pay-chip soon">🔜 Wenia</div>
+      </div>
+    </div>
+
+    <!-- Nota legal -->
+    <p style="font-size:12px;color:var(--text-muted);max-width:600px;margin:24px auto 0;line-height:1.7">
+      ⚠️ El llavero es el producto físico que adquieres. La asignación de $VIVE es un beneficio incluido sin garantía de valor. Lee los Términos y Condiciones antes de comprar.
+    </p>
+  </div>
+</section>
+
 <!-- ── FAQ ── -->
 <section class="faq" id="faq">
   <div class="sec">
@@ -749,7 +939,8 @@
         </a>
         <p>El protocolo de tokenización inmobiliaria más accesible de LATAM. Blockchain, sin complicaciones.</p>
       </div>
-      <div class="foot-col"><h5>Protocolo</h5><ul><li><a href="#que-es">¿Qué es?</a></li><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#la-llave">La Llave</a></li><li><a href="#por-que">Por qué LATAM</a></li></ul></div>
+      <div class="foot-col"><h5>Protocolo</h5><ul><li><a href="#que-es">¿Qué es?</a></li><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#la-llave">La Llave</a></li>
+      <li><a href="#compra">Comprar</a></li><li><a href="#por-que">Por qué LATAM</a></li></ul></div>
       <div class="foot-col"><h5>Token</h5><ul><li><a href="#token">Token $VIVE</a></li><li><a href="#whitepaper">Whitepaper</a></li><li><a href="#faq">FAQ</a></li></ul></div>
       <div class="foot-col"><h5>Comunidad</h5><ul><li><a href="https://wa.me/573217480382" target="_blank">WhatsApp VIVI</a></li><li><a href="#" target="_blank">Telegram</a></li><li><a href="#" target="_blank">Twitter / X</a></li><li><a href="#" target="_blank">LinkedIn</a></li></ul></div>
     </div>
@@ -788,7 +979,28 @@
   const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
     if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
   }),{threshold:.1,rootMargin:'0 0 -40px 0'});
-  document.querySelectorAll('.step,.wc,.tc,.lp,.what-point').forEach(el=>{
+
+  // Cargar disponibilidad de llaveros desde Supabase
+  async function loadTierSupply() {
+    try {
+      const res = await fetch('https://eefjbevndbjbpgokmjcn.supabase.co/rest/v1/keys?select=tier,status', {
+        headers: {
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVlZmpiZXZuZGJqYnBnb2ttamNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAxODI4NTUsImV4cCI6MjA3NTc1ODg1NX0.R_yabVOPbmeYxYo9RkeVkK1V5dXg16Fjuv68UkhrcVQ',
+          'Accept': 'application/json'
+        }
+      });
+      const keys = await res.json();
+      if (!Array.isArray(keys)) return;
+      const count = (tier, status) => keys.filter(k => k.tier===tier && k.status===status).length;
+      const set = (id, txt) => { const el=document.getElementById(id); if(el) el.textContent=txt; };
+      set('founders-supply', `${count('founders','active')} vendidas · ${count('founders','pending')} disponibles de 100`);
+      set('early-supply',    `${count('early','active')} vendidas · ${count('early','pending')} disponibles de 400`);
+      set('comunidad-supply',`${count('comunidad','active')} vendidas · ${count('comunidad','pending')} disponibles de 2,000`);
+    } catch(e) { console.log('Supply load error:', e); }
+  }
+  loadTierSupply();
+
+  document.querySelectorAll('.step,.wc,.tc,.lp,.what-point,.tier-card').forEach(el=>{
     el.style.opacity='0';el.style.transform='translateY(20px)';
     el.style.transition='opacity .5s ease,transform .5s ease';
     obs.observe(el);
