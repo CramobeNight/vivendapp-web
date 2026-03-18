@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VivenDapp — Presentaciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#181936;color:#F2F4F4;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+.logo{font-family:'Nunito',sans-serif;font-size:32px;font-weight:900;margin-bottom:8px}
+.logo .v{color:#42BFEC}.logo .d{color:#32BB75}
+.tagline{color:rgba(242,244,244,0.5);font-size:14px;margin-bottom:60px;text-align:center}
+h1{font-family:'Nunito',sans-serif;font-size:clamp(22px,4vw,32px);font-weight:900;margin-bottom:12px;text-align:center;letter-spacing:-0.5px}
+.sub{color:rgba(242,244,244,0.55);font-size:15px;margin-bottom:48px;text-align:center}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;width:100%}
+.card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(66,191,236,0.15);border-radius:20px;padding:32px 24px;text-decoration:none;color:#F2F4F4;transition:all .3s;display:flex;flex-direction:column;gap:12px}
+.card:hover{transform:translateY(-6px);border-color:rgba(50,187,117,0.4);background:rgba(50,187,117,0.05)}
+.card-icon{font-size:36px}
+.card-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;line-height:1.2}
+.card-desc{font-size:13px;color:rgba(242,244,244,0.55);line-height:1.6;flex:1}
+.card-slides{font-size:11px;color:#36BDAF;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.card-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);color:#181936;padding:10px 20px;border-radius:10px;font-weight:800;font-size:13px;margin-top:8px;transition:all .2s}
+.card:hover .card-btn{box-shadow:0 6px 20px rgba(50,187,117,0.4)}
+.footer{margin-top:48px;font-size:13px;color:rgba(242,244,244,0.3);text-align:center}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="logo"><span class="v">Viven</span><span class="d">DApp</span></div>
+<p class="tagline">Protocolo de tokenización inmobiliaria en LATAM</p>
+<h1>Presentaciones Oficiales</h1>
+<p class="sub">Selecciona la presentación según tu audiencia</p>
+<div class="cards">
+  <a href="investor-early.html" class="card">
+    <span class="card-icon">💎</span>
+    <div class="card-title">Early Investors</div>
+    <p class="card-desc">Para tu red personal y primeros inversores que quieren ser Founders del protocolo. Desde $100.</p>
+    <div class="card-slides">10 slides</div>
+    <span class="card-btn">Ver presentación →</span>
+  </a>
+  <a href="property-owner.html" class="card">
+    <span class="card-icon">🏠</span>
+    <div class="card-title">Propietarios</div>
+    <p class="card-desc">Para dueños de apartamentos vacacionales, hoteles boutique y propiedades de renta corta en LATAM.</p>
+    <div class="card-slides">9 slides</div>
+    <span class="card-btn">Ver presentación →</span>
+  </a>
+  <a href="ambassador.html" class="card">
+    <span class="card-icon">🤝</span>
+    <div class="card-title">Embajadores</div>
+    <p class="card-desc">Para personas que quieren comercializar llaveros VivenDapp y ganar en USD y $VIVE.</p>
+    <div class="card-slides">10 slides</div>
+    <span class="card-btn">Ver presentación →</span>
+  </a>
+</div>
+<p class="footer">© 2026 VivenDapp · <a href="https://vivendapp.io" style="color:#36BDAF;text-decoration:none">vivendapp.io</a></p>
+</body>
+</html>

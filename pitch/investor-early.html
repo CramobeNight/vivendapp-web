@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VivenDapp — Investor Early Access</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #32BB75;
+    --teal: #36BDAF;
+    --blue: #42BFEC;
+    --dark: #181936;
+    --light: #F2F4F4;
+    --grad: linear-gradient(135deg, #42BFEC, #36BDAF, #32BB75);
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(66,191,236,0.2);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--dark);
+    color: var(--light);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  .presentation {
+    position: relative;
+    width: 100%; height: 100%;
+  }
+
+  /* SLIDE */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(30px);
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  /* HEADER */
+  .slide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px 16px;
+    border-bottom: 1px solid rgba(66,191,236,0.15);
+    flex-shrink: 0;
+  }
+  .logo {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+  }
+  .logo span:first-child { color: var(--blue); }
+  .logo span:last-child { color: var(--green); }
+
+  .progress-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(242,244,244,0.5);
+    font-weight: 500;
+  }
+
+  /* CONTENT */
+  .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 60px;
+    overflow: hidden;
+  }
+
+  /* FOOTER */
+  .slide-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 40px;
+    border-top: 1px solid rgba(66,191,236,0.1);
+    flex-shrink: 0;
+    gap: 32px;
+  }
+  .footer-brand {
+    font-size: 0.8rem;
+    color: rgba(242,244,244,0.4);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* NAVIGATION */
+  .nav-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(66,191,236,0.25);
+    color: var(--light);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-btn:hover { background: rgba(66,191,236,0.15); border-color: var(--blue); }
+  .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+  /* TYPOGRAPHY */
+  .slide-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    line-height: 1.15;
+  }
+
+  .headline-xl {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .headline-lg {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .headline-md {
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: rgba(242,244,244,0.7);
+    text-align: center;
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  /* CARD GRID */
+  .cards-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    max-width: 860px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    flex: 1;
+    min-width: 180px;
+    max-width: 260px;
+  }
+  .card-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .card-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    color: var(--light);
+  }
+  .card-body {
+    font-size: 0.85rem;
+    color: rgba(242,244,244,0.6);
+    line-height: 1.5;
+  }
+
+  /* BIG NUMBER */
+  .big-number {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    display: block;
+  }
+
+  /* DIAGRAM */
+  .diagram {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .diagram-node {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .diagram-arrow {
+    color: var(--teal);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  /* TABLE */
+  .vive-table {
+    width: 100%;
+    max-width: 680px;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+  }
+  .vive-table th {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(242,244,244,0.45);
+    padding: 0 18px 8px;
+    text-align: left;
+  }
+  .vive-table td {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .vive-table td:first-child { border-radius: 12px 0 0 12px; }
+  .vive-table td:last-child { border-radius: 0 12px 12px 0; border-left: none; }
+  .vive-table td:not(:first-child):not(:last-child) { border-left: none; border-right: none; }
+  .mult { color: var(--green); font-weight: 800; }
+
+  /* STEPS */
+  .steps-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    max-width: 860px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .step {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px 16px;
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    text-align: center;
+  }
+  .step-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .step-label {
+    font-size: 0.82rem;
+    color: rgba(242,244,244,0.75);
+    line-height: 1.4;
+  }
+
+  /* CTA BUTTON */
+  .btn-cta {
+    background: var(--grad);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 36px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(54,189,175,0.3);
+  }
+  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(54,189,175,0.45); }
+  .btn-cta-lg {
+    font-size: 1.2rem;
+    padding: 18px 48px;
+  }
+
+  /* TRACTION ITEMS */
+  .traction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 560px;
+    width: 100%;
+  }
+  .traction-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .traction-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--grad);
+    flex-shrink: 0;
+  }
+
+  /* BENEFIT TAGS */
+  .benefit-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 680px;
+    margin: 12px 0;
+  }
+  .tag {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--light);
+  }
+
+  /* QUOTE */
+  .quote {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: rgba(242,244,244,0.85);
+    text-align: center;
+    font-style: italic;
+    max-width: 600px;
+    border-left: 3px solid var(--teal);
+    padding: 12px 20px;
+    background: var(--card-bg);
+    border-radius: 0 12px 12px 0;
+    margin: 16px 0;
+  }
+
+  /* OPPORTUNITY */
+  .opp-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 720px;
+    width: 100%;
+  }
+  .opp-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: center;
+    flex: 1;
+    min-width: 180px;
+  }
+  .opp-scenario {
+    font-size: 0.78rem;
+    color: rgba(242,244,244,0.5);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .opp-result {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .opp-mult {
+    font-size: 0.9rem;
+    color: var(--green);
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  /* COVER BG EFFECT */
+  .cover-glow {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(66,191,236,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) {
+    .slide-content { padding: 20px 24px; }
+    .slide-header { padding: 16px 24px 12px; }
+    .cards-row, .steps-row, .opp-row { gap: 10px; }
+    .card, .step, .opp-card { min-width: 130px; padding: 16px 12px; }
+    .vive-table { font-size: 0.78rem; }
+    .vive-table td { padding: 10px 12px; }
+    .diagram-node { padding: 10px 12px; font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="presentation" id="presentation">
+
+  <!-- SLIDE 1: PORTADA -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">1 / 10</div>
+    </div>
+    <div class="slide-content" style="position:relative;">
+      <div class="cover-glow"></div>
+      <div class="slide-tag">Early Access · Founders Round</div>
+      <h1 class="headline-xl">
+        El protocolo inmobiliario<br>
+        <span class="grad-text">más ambicioso de LATAM</span>
+      </h1>
+      <p class="subtitle">Tokenizando el sueño de la propiedad para 43 millones de familias latinoamericanas — desde $50 USD, sin bancos, en blockchain.</p>
+      <a href="https://wa.me/573217480382" class="btn-cta">Activar mi Llave →</a>
+      <p style="font-size:0.78rem;color:rgba(242,244,244,0.4);margin-top:14px;">Únete como Founder por $100</p>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: EL PROBLEMA -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">2 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">El Problema</div>
+      <h2 class="headline-lg">650M de latinoamericanos sin acceso<br>a invertir en <span class="grad-text">finca raíz</span></h2>
+      <p class="subtitle" style="margin-bottom:28px;">El mercado inmobiliario ha sido históricamente exclusivo, burocrático e ilíquido.</p>
+      <div class="cards-row">
+        <div class="card">
+          <div class="card-icon">🚧</div>
+          <div class="card-title">Mínimo $50,000 para entrar</div>
+          <div class="card-body">La barrera de entrada excluye al 99% de la población latinoamericana del mercado inmobiliario.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏦</div>
+          <div class="card-title">Burocracia bancaria interminable</div>
+          <div class="card-body">Créditos hipotecarios, fianzas, avalúos, notarías… meses de procesos para comprar una propiedad.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">Sin liquidez</div>
+          <div class="card-body">Una vez que inviertes en finca raíz, no puedes vender fácil. Tu capital queda atrapado por años.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: LA SOLUCIÓN -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">3 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">La Solución</div>
+      <h2 class="headline-lg"><span class="grad-text">VivenDapp.</span> Bienes raíces tokenizados<br>en blockchain Polygon.</h2>
+      <div class="benefit-tags">
+        <div class="tag">✅ Desde $50 USD</div>
+        <div class="tag">✅ Sin bancos</div>
+        <div class="tag">✅ Sin papeleo</div>
+        <div class="tag">✅ Rendimientos automáticos</div>
+        <div class="tag">✅ Liquidez real</div>
+      </div>
+      <div class="diagram">
+        <div class="diagram-node">🏠 Propiedad<br>Física</div>
+        <div class="diagram-arrow">→</div>
+        <div class="diagram-node">📜 Smart<br>Contract</div>
+        <div class="diagram-arrow">→</div>
+        <div class="diagram-node" style="background:linear-gradient(135deg,rgba(66,191,236,0.15),rgba(50,187,117,0.15));border-color:var(--teal);">🪙 Token<br>$VIVE</div>
+        <div class="diagram-arrow">→</div>
+        <div class="diagram-node">👥 Cualquier<br>Persona</div>
+      </div>
+      <p class="subtitle" style="font-size:0.9rem;">Fraccionamos propiedades reales en tokens digitales. Inviertes, recibes rentas, y puedes vender tus fracciones cuando quieras.</p>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: EL MERCADO -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">4 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">El Mercado</div>
+      <h2 class="headline-lg">Una oportunidad <span class="grad-text">histórica</span></h2>
+      <div style="text-align:center;margin:8px 0 20px;">
+        <span class="big-number">$2.5 Trillones</span>
+        <p style="font-size:0.9rem;color:rgba(242,244,244,0.6);margin-top:4px;">mercado inmobiliario LATAM — solo <strong style="color:var(--blue);">0.04% tokenizado</strong></p>
+      </div>
+      <div class="cards-row">
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🇨🇴</div>
+          <div class="card-title">Colombia</div>
+          <div class="card-body"><span class="grad-text" style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;">8-15%</span><br>valorización anual</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🇲🇽</div>
+          <div class="card-title">México</div>
+          <div class="card-body" style="color:var(--teal);font-weight:600;font-size:0.9rem;">Mismo potencial</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🇵🇪</div>
+          <div class="card-title">Perú</div>
+          <div class="card-body" style="color:var(--teal);font-weight:600;font-size:0.9rem;">Mismo potencial</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🇦🇷</div>
+          <div class="card-title">Argentina</div>
+          <div class="card-body" style="color:var(--teal);font-weight:600;font-size:0.9rem;">Mismo potencial</div>
+        </div>
+      </div>
+      <p class="subtitle" style="font-size:0.82rem;margin-top:14px;">Camino al unicornio: ser el protocolo líder en un mercado de $2.5T con menos del 1% de penetración digital.</p>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: RENTAS CORTAS -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">5 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Rentas Cortas · El Nicho Ganador</div>
+      <h2 class="headline-lg">Airbnb/Vrbo en destinos LATAM:<br><span class="grad-text">15-25% retorno anual</span></h2>
+      <div class="benefit-tags">
+        <div class="tag">🏖️ Cartagena</div>
+        <div class="tag">🌿 Medellín</div>
+        <div class="tag">🌊 Tulum</div>
+        <div class="tag">🏝️ San Andrés</div>
+        <div class="tag">🌺 Manuel Antonio</div>
+      </div>
+      <div class="card" style="max-width:580px;width:100%;margin:16px 0;text-align:center;padding:22px;">
+        <div style="font-size:1rem;font-weight:600;margin-bottom:8px;">Acceso colectivo a propiedades vacacionales de lujo</div>
+        <div style="font-size:0.85rem;color:rgba(242,244,244,0.6);">Propiedades que antes solo podían comprar personas con $200,000+ en efectivo. Ahora desde $50 USD.</div>
+      </div>
+      <div class="quote">"Antes solo los ricos tenían acceso. Ahora tú también."</div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: EL TOKEN $VIVE -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">6 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">El Token</div>
+      <h2 class="headline-lg"><span class="grad-text">$VIVE</span> — El combustible del protocolo</h2>
+      <div class="benefit-tags" style="margin-bottom:20px;">
+        <div class="tag">Supply: 1 Billón</div>
+        <div class="tag">Red: Polygon</div>
+        <div class="tag">TGE: Q3 2026</div>
+      </div>
+      <table class="vive-table">
+        <thead>
+          <tr>
+            <th>Etapa</th>
+            <th>Precio</th>
+            <th>Potencial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>👑 T1 Founders (hoy)</td>
+            <td><strong style="color:var(--blue);">$0.001</strong></td>
+            <td><span class="mult">Base</span></td>
+          </tr>
+          <tr>
+            <td>🚀 TGE (Q3 2026)</td>
+            <td><strong style="color:var(--teal);">$0.01</strong></td>
+            <td><span class="mult">10x</span></td>
+          </tr>
+          <tr>
+            <td>📈 Año 1</td>
+            <td><strong style="color:var(--green);">$0.10</strong></td>
+            <td><span class="mult">100x</span></td>
+          </tr>
+          <tr>
+            <td>🦄 Unicornio</td>
+            <td><strong style="color:#FFD700;">$1.00</strong></td>
+            <td><span class="mult" style="color:#FFD700;">1,000x</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: TU LLAVERO FOUNDER -->
+  <div class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">7 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Tu Llavero Founder</div>
+      <h2 class="headline-lg">Metal. <span class="grad-text">Solo 100 en el mundo.</span></h2>
+      <div class="cards-row" style="margin-bottom:16px;">
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🪙</div>
+          <div class="card-title">100,000 $VIVE</div>
+          <div class="card-body">Con vesting de 24 meses — alineados al largo plazo.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🏅</div>
+          <div class="card-title">Badge Founder</div>
+          <div class="card-body">Permanente. Nunca se pierde. Tu identidad en el protocolo.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🗳️</div>
+          <div class="card-title">Voto Doble</div>
+          <div class="card-body">En gobernanza del protocolo. Tú decides el futuro de VivenDapp.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">⏰</div>
+          <div class="card-title">Acceso 72h Antes</div>
+          <div class="card-body">A nuevas propiedades antes de que salgan al mercado general.</div>
+        </div>
+      </div>
+      <div class="quote">"Este número nunca se repite."</div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: CÓMO FUNCIONA -->
+  <div class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">8 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Cómo Funciona</div>
+      <h2 class="headline-lg">4 pasos para empezar a invertir<br><span class="grad-text">en bienes raíces</span></h2>
+      <div class="steps-row">
+        <div class="step">
+          <span class="step-num">1</span>
+          <div class="step-label">📱 Escanea el QR de tu llave Founder</div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <div class="step-label">💬 VIVI (IA) te registra por WhatsApp</div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <div class="step-label">🏠 Explora y elige propiedades tokenizadas</div>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <div class="step-label">💰 Recibe rendimientos automáticamente</div>
+        </div>
+      </div>
+      <p class="subtitle" style="font-size:0.85rem;margin-top:20px;">Sin apps complicadas. Sin bancos. Sin trámites. Solo WhatsApp y tu wallet.</p>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: TRACCIÓN -->
+  <div class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">9 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Tracción</div>
+      <h2 class="headline-lg">Ya estamos <span class="grad-text">en movimiento</span></h2>
+      <div class="traction-list">
+        <div class="traction-item">
+          <div class="traction-dot"></div>
+          <span>💬 WhatsApp AI agent VIVI — activo y funcionando</span>
+        </div>
+        <div class="traction-item">
+          <div class="traction-dot"></div>
+          <span>📱 App móvil MVP construida y lista</span>
+        </div>
+        <div class="traction-item">
+          <div class="traction-dot"></div>
+          <span>🌐 Landing vivendapp.io — live y recibiendo tráfico</span>
+        </div>
+        <div class="traction-item">
+          <div class="traction-dot"></div>
+          <span>🔑 Primeros Founders registrando sus llaveros</span>
+        </div>
+        <div class="traction-item" style="border-color:rgba(66,191,236,0.4);border-style:dashed;">
+          <div class="traction-dot" style="background:rgba(242,244,244,0.2);"></div>
+          <span style="color:rgba(242,244,244,0.4);">📊 [Métricas futuras — próxima actualización]</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: LA OPORTUNIDAD -->
+  <div class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">10 / 10</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">La Oportunidad</div>
+      <h2 class="headline-md">Tu inversión hoy: <span class="grad-text">$100</span></h2>
+      <div class="opp-row" style="margin:14px 0;">
+        <div class="opp-card">
+          <div class="opp-scenario">Inversión</div>
+          <div class="opp-result">$100</div>
+          <div class="opp-mult">Hoy · Precio Founder</div>
+        </div>
+        <div class="opp-card">
+          <div class="opp-scenario">Si $VIVE = $0.10</div>
+          <div class="opp-result">$10,000</div>
+          <div class="opp-mult">100x</div>
+        </div>
+        <div class="opp-card" style="border-color:rgba(255,215,0,0.3);">
+          <div class="opp-scenario">Si $VIVE = $1.00</div>
+          <div class="opp-result" style="color:#FFD700;-webkit-text-fill-color:#FFD700;">$100,000</div>
+          <div class="opp-mult" style="color:#FFD700;">1,000x — Unicornio</div>
+        </div>
+      </div>
+      <div class="quote" style="max-width:640px;">"¿Cuándo fue la última vez que pudiste invertir en el próximo Mercado Libre desde $100?"</div>
+      <a href="https://wa.me/573217480382" class="btn-cta btn-cta-lg" style="margin-top:16px;">Escríbele a VIVI → wa.me/573217480382</a>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION OVERLAY -->
+<div style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;z-index:100;">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>←</button>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+</div>
+
+<script>
+  let current = 0;
+  const total = 10;
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  function showSlide(index) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => { slides[current].classList.remove('exit'); }, 500);
+
+    current = index;
+    slides[current].classList.add('active');
+
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next >= 0 && next < total) showSlide(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  // Touch/swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>

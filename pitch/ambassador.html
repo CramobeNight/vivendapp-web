@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Programa Embajadores — VivenDapp</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#32BB75;--teal:#36BDAF;--blue:#42BFEC;
+  --dark:#181936;--dark2:#1f2248;--light:#F2F4F4;
+  --grad:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);
+  --border:rgba(66,191,236,0.18);--muted:rgba(242,244,244,0.6);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Inter',sans-serif;color:var(--light)}
+h1,h2,h3,h4{font-family:'Nunito',sans-serif}
+.deck{position:relative;width:100vw;height:100vh}
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;padding:60px 40px 80px;
+  opacity:0;pointer-events:none;transition:opacity .5s ease,transform .5s ease;
+  transform:translateY(16px);text-align:center;
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateY(0)}
+/* bg variants */
+.slide::before{content:'';position:absolute;inset:0;pointer-events:none}
+.slide-1::before{background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(66,191,236,.13),transparent 70%),radial-gradient(ellipse 60% 50% at 80% 90%,rgba(50,187,117,.1),transparent 60%)}
+.slide-2::before,.slide-3::before,.slide-4::before,.slide-5::before,.slide-6::before,.slide-7::before,.slide-8::before,.slide-9::before,.slide-10::before{background:radial-gradient(ellipse 70% 50% at 20% 50%,rgba(54,189,175,.06),transparent 60%)}
+/* grid */
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(66,191,236,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(66,191,236,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+/* header */
+.slide-header{position:absolute;top:24px;left:40px;display:flex;align-items:center;gap:8px;z-index:10}
+.logo-text{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px}
+.logo-text .v{color:var(--blue)}.logo-text .d{color:var(--green)}
+/* footer */
+.slide-footer{position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:center;align-items:center;font-size:12px;color:var(--muted);gap:6px;z-index:10}
+/* content wrapper */
+.content{position:relative;z-index:2;max-width:900px;width:100%}
+/* typography */
+.label{font-size:12px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;display:block}
+.hero-title{font-size:clamp(32px,5vw,64px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px}
+.hero-title .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sec-title{font-size:clamp(26px,4vw,48px);font-weight:900;line-height:1.15;letter-spacing:-1px;margin-bottom:16px}
+.sec-title .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:clamp(15px,2vw,19px);color:var(--muted);line-height:1.7;max-width:600px;margin:0 auto 36px}
+.subtitle strong{color:var(--light)}
+/* cards */
+.cards{display:grid;gap:16px;width:100%}
+.cards-3{grid-template-columns:repeat(3,1fr)}
+.cards-4{grid-template-columns:repeat(4,1fr)}
+.cards-2{grid-template-columns:repeat(2,1fr)}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:16px;padding:22px 18px;text-align:left}
+.card.accent{border-color:rgba(50,187,117,.3);background:rgba(50,187,117,.05)}
+.card.gold{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.04)}
+.card .icon{font-size:28px;margin-bottom:12px;display:block}
+.card h4{font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;margin-bottom:8px}
+.card p,.card li{font-size:13px;color:var(--muted);line-height:1.6}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.card ul li::before{content:'→ ';color:var(--green)}
+/* stat big */
+.stat-big{font-family:'Nunito',sans-serif;font-size:clamp(48px,7vw,88px);font-weight:900;line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:14px;color:var(--muted);margin-top:6px}
+.stats-row{display:flex;gap:48px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:28px 0}
+.stat-div{width:1px;background:var(--border);height:60px}
+/* table */
+.vtable{width:100%;border-collapse:collapse;font-size:14px}
+.vtable th{padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal);border-bottom:1px solid var(--border);font-family:'Nunito',sans-serif}
+.vtable td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.05)}
+.vtable tr:last-child td{border-bottom:none}
+.vtable .val{font-family:'Nunito',sans-serif;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.vtable-wrap{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;overflow:hidden;width:100%}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;margin-top:8px}
+.step{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;padding:20px 14px;text-align:center}
+.step-n{width:44px;height:44px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--dark);margin:0 auto 14px;box-shadow:0 6px 20px rgba(50,187,117,.4)}
+.step h5{font-size:14px;font-weight:800;margin-bottom:6px}
+.step p{font-size:12px;color:var(--muted);line-height:1.5}
+/* pills */
+.pill{display:inline-block;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700}
+.pill-green{background:rgba(50,187,117,.12);color:var(--green);border:1px solid rgba(50,187,117,.25)}
+.pill-blue{background:rgba(66,191,236,.12);color:var(--blue);border:1px solid rgba(66,191,236,.25)}
+.pill-muted{background:rgba(255,255,255,.06);color:var(--muted)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;border-radius:14px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;text-decoration:none;transition:all .2s;cursor:pointer;border:none}
+.btn-primary{background:var(--grad);color:var(--dark);box-shadow:0 8px 28px rgba(50,187,117,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(50,187,117,.55)}
+.btn-outline{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.2);color:var(--light)}
+.btn-outline:hover{background:rgba(255,255,255,.12)}
+.cta-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+/* badge */
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(66,191,236,.1);border:1px solid rgba(66,191,236,.25);padding:8px 18px;border-radius:100px;font-size:13px;color:var(--blue);font-weight:700;margin-bottom:28px}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+/* lvl diagram */
+.lvl{display:flex;flex-direction:column;align-items:center;gap:8px}
+.lvl-box{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:12px;padding:12px 20px;font-size:13px;font-weight:700;position:relative;min-width:160px}
+.lvl-box.me{border-color:rgba(255,215,0,.4);background:rgba(255,215,0,.06);color:#FFD700}
+.lvl-box.l1{border-color:rgba(50,187,117,.4);color:var(--green)}
+.lvl-box.l2{border-color:rgba(66,191,236,.3);color:var(--blue);opacity:.8}
+.lvl-arrow{font-size:18px;color:var(--muted)}
+.lvl-reward{font-size:11px;color:var(--green);font-weight:700;margin-top:3px}
+.lvl-reward.blue{color:var(--blue)}
+.lvl-note{font-size:12px;color:var(--muted);padding:8px 16px;border:1px dashed rgba(255,255,255,.1);border-radius:8px;margin-top:8px}
+/* nav */
+#nav{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:20px;z-index:100;background:rgba(24,25,54,.85);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:100px;padding:10px 24px}
+.nav-btn{background:none;border:none;color:var(--light);cursor:pointer;font-size:20px;opacity:.7;transition:all .2s;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.nav-btn:hover{opacity:1;background:rgba(255,255,255,.1)}
+.nav-btn:disabled{opacity:.2;cursor:default}
+#progress{font-size:13px;color:var(--muted);min-width:52px;text-align:center;font-weight:600}
+.full-btn{background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:13px;padding:6px 12px;border-radius:8px;transition:all .2s}
+.full-btn:hover{color:var(--light);border-color:rgba(255,255,255,.3)}
+/* responsive */
+@media(max-width:768px){
+  .slide{padding:60px 20px 80px}
+  .cards-3,.cards-4{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .stats-row{gap:24px}.stat-div{display:none}
+}
+@media(max-width:500px){
+  .cards-3,.cards-4,.cards-2{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="deck" id="deck">
+
+<!-- SLIDE 1 — PORTADA -->
+<div class="slide slide-1 active">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <div class="badge"><span class="dot"></span>Programa de Embajadores · Versión 1.0</div>
+    <h1 class="hero-title">Vende el futuro de<br/>los bienes raíces.<br/><span class="g">Gana mientras crece.</span></h1>
+    <p class="subtitle">Comercializa llaveros VivenDapp. Consigue propietarios. Gana en <strong>USD hoy</strong> y en <strong>$VIVE para siempre</strong>.</p>
+    <div class="cta-group">
+      <a href="https://wa.me/573217480382?text=Quiero%20ser%20Embajador%20VivenDapp" target="_blank" class="btn btn-primary">Quiero ser Embajador →</a>
+      <a href="https://vivendapp.io" target="_blank" class="btn btn-outline">vivendapp.io</a>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 2 — QUÉ ES UN EMBAJADOR -->
+<div class="slide slide-2">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">El rol</span>
+    <h2 class="sec-title">¿Qué es un <span class="g">Embajador</span>?</h2>
+    <div class="cards cards-3" style="margin-top:16px">
+      <div class="card"><span class="icon">❌</span><h4>No eres empleado</h4><p>Sin horarios. Sin jefe. Sin contrato de dependencia. Tú decides cuándo y cuánto trabajas.</p></div>
+      <div class="card"><span class="icon">❌</span><h4>No eres vendedor</h4><p>No tienes cuotas obligatorias. No hay presión. Si no vendes, no pierdes nada.</p></div>
+      <div class="card accent"><span class="icon">✅</span><h4>Eres un socio</h4><p>Crees en el proyecto. Comercializas llaveros físicos reales. Consigues propietarios. Ganas en USD y en $VIVE.</p></div>
+    </div>
+    <div style="margin-top:20px;padding:18px;background:rgba(50,187,117,.06);border:1px solid rgba(50,187,117,.2);border-radius:14px">
+      <p style="font-size:15px;line-height:1.7"><strong style="color:var(--green)">La propuesta:</strong> compras llaveros al precio mayorista, los vendes al precio oficial. La diferencia es tuya. <em>Inmediato, sin esperar el TGE.</em></p>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 3 — QUÉ VENDES -->
+<div class="slide slide-3">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">El producto</span>
+    <h2 class="sec-title">Los llaveros <span class="g">VivenDapp</span></h2>
+    <p class="subtitle" style="margin-bottom:20px">Cada llavero es un producto físico único con $VIVE pre-asignados. Tú compras mayorista, vendes al precio oficial.</p>
+    <div class="vtable-wrap">
+      <table class="vtable">
+        <thead><tr><th>Tier</th><th>Precio Oficial</th><th>Tu precio mayorista</th><th>Tu margen</th><th>$VIVE incluidos</th></tr></thead>
+        <tbody>
+          <tr><td>👑 Founders (metal)</td><td class="val">$100</td><td>~$70</td><td class="val">$30</td><td>100,000 $VIVE</td></tr>
+          <tr><td>🥇 Early (piel premium)</td><td class="val">$50</td><td>~$35</td><td class="val">$15</td><td>40,000 $VIVE</td></tr>
+          <tr><td>🥈 Comunidad (piel std)</td><td class="val">$25</td><td>~$17</td><td class="val">$8</td><td>15,000 $VIVE</td></tr>
+          <tr><td>🥉 General (PVC)</td><td class="val">$10</td><td>~$7</td><td class="val">$3</td><td>5,000 $VIVE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 4 — PAQUETES -->
+<div class="slide slide-4">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">Cómo entrar</span>
+    <h2 class="sec-title">Paquetes de <span class="g">Embajador</span></h2>
+    <div class="cards cards-3" style="margin-top:16px">
+      <div class="card">
+        <span class="icon">🌱</span>
+        <h4>Pack Iniciación</h4>
+        <ul><li>10 llaveros (mix de tiers)</li><li>Precio mayorista ~25% dto.</li><li>Material de presentación digital</li><li>Soporte por WhatsApp</li></ul>
+        <div style="margin-top:14px"><span class="pill pill-green">Para empezar</span></div>
+      </div>
+      <div class="card accent">
+        <span class="icon">🌟</span>
+        <h4>Pack Pro</h4>
+        <ul><li>25 llaveros (mix de tiers)</li><li>Precio mayorista ~30% dto.</li><li>Materiales co-branded físicos</li><li>Soporte dedicado</li><li>Acceso a comunidad privada</li></ul>
+        <div style="margin-top:14px"><span class="pill pill-green">Más popular</span></div>
+      </div>
+      <div class="card gold">
+        <span class="icon">💎</span>
+        <h4>Pack Comercializador</h4>
+        <ul><li>50+ llaveros</li><li>Precio mayorista ~35% dto.</li><li>Co-branding completo</li><li>Contrato de distribución</li><li>Mejor precio del mercado</li></ul>
+        <div style="margin-top:14px"><span class="pill" style="background:rgba(255,215,0,.1);color:#FFD700;border:1px solid rgba(255,215,0,.3)">Para distribuidores</span></div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:18px">Solicita tu pack escribiéndole a VIVI → <strong style="color:var(--green)">wa.me/573217480382</strong></p>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 5 — GANANCIAS USD -->
+<div class="slide slide-5">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">Ingresos inmediatos</span>
+    <h2 class="sec-title">Ganancias en <span class="g">USD</span></h2>
+    <p class="subtitle" style="margin-bottom:20px">Sin esperar el TGE. Sin vesting. El margen es tuyo desde el primer día.</p>
+    <div class="cards cards-4">
+      <div class="card"><div class="stat-big" style="font-size:36px">$150</div><div class="stat-label">10 llaveros/mes<br/>ingreso extra</div></div>
+      <div class="card"><div class="stat-big" style="font-size:36px">$450</div><div class="stat-label">30 llaveros/mes<br/>ingreso extra</div></div>
+      <div class="card accent"><div class="stat-big" style="font-size:36px">$1,500</div><div class="stat-label">100 llaveros/mes<br/>ingreso extra</div></div>
+      <div class="card"><div class="stat-big" style="font-size:36px">$3,000</div><div class="stat-label">200 llaveros/mes<br/>ingreso extra</div></div>
+    </div>
+    <div style="margin-top:20px;padding:16px 24px;background:rgba(66,191,236,.06);border:1px solid rgba(66,191,236,.2);border-radius:12px">
+      <p style="font-size:14px">💡 <strong>Tip:</strong> Los llaveros Founders ($100 c/u, $30 de margen) son los más fáciles de vender a personas con visión de largo plazo. Solo necesitas <strong>10 Founders/mes</strong> para $300 USD extra.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 6 — GANANCIAS $VIVE -->
+<div class="slide slide-6">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">Recompensas del ecosistema</span>
+    <h2 class="sec-title">Ganancias en <span class="g">$VIVE</span></h2>
+    <div class="vtable-wrap" style="margin-bottom:20px">
+      <table class="vtable">
+        <thead><tr><th>Acción</th><th>$VIVE que ganas</th><th>Vesting</th></tr></thead>
+        <tbody>
+          <tr><td>🔑 Llavero activado por tu cliente (Nivel 1)</td><td class="val">500 $VIVE</td><td>3 meses</td></tr>
+          <tr><td>🔑 Llavero de cliente de embajador que reclutaste (Nivel 2)</td><td class="val">100 $VIVE</td><td>3 meses</td></tr>
+          <tr><td>🏘️ Propiedad registrada por tu cliente</td><td class="val">1,000 $VIVE</td><td>3 meses</td></tr>
+          <tr><td>🤝 Reclutar nuevo embajador (bono ÚNICO)</td><td class="val">2,000 $VIVE</td><td>3 meses</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="padding:14px 20px;background:rgba(50,187,117,.07);border:1px solid rgba(50,187,117,.2);border-radius:12px">
+      <p style="font-size:14px;line-height:1.65">📊 <strong>Ejemplo:</strong> 20 llaveros activados/mes = <strong style="color:var(--green)">10,000 $VIVE/mes</strong>. En 12 meses = <strong style="color:var(--green)">120,000 $VIVE</strong> acumulados en vesting.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 7 — 2 NIVELES, NO MLM -->
+<div class="slide slide-7">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">La estructura</span>
+    <h2 class="sec-title">2 niveles. <span class="g">No es MLM.</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;text-align:left">
+      <div>
+        <p style="font-size:13px;color:var(--teal);font-weight:700;margin-bottom:12px">CÓMO FUNCIONA:</p>
+        <div class="lvl">
+          <div class="lvl-box me">TÚ — Embajador<div class="lvl-reward">500 $VIVE por cada llavero tuyo</div></div>
+          <div class="lvl-arrow">↓ Reclutaste a María (bono único 2,000 $VIVE)</div>
+          <div class="lvl-box l1">María — Embajadora<div class="lvl-reward">500 $VIVE por sus llaveros</div><div class="lvl-reward blue">+100 $VIVE para TI por sus llaveros</div></div>
+          <div class="lvl-arrow">↓ María reclutó a Juan</div>
+          <div class="lvl-box l2">Juan — Embajador<div class="lvl-reward">500 $VIVE por sus llaveros</div><div class="lvl-note">TÚ no recibes nada de Juan. Fin de la cadena.</div></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:13px;color:var(--green);font-weight:700;margin-bottom:12px">¿POR QUÉ NO ES MLM?</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card"><h4>✅ Solo 2 niveles</h4><p>La cadena no es infinita. Juan no puede pasarle ganancias a María ni a ti.</p></div>
+          <div class="card"><h4>✅ Bono de reclutamiento único</h4><p>Solo lo recibes una vez cuando alguien entra. No hay % recurrente de sus ventas.</p></div>
+          <div class="card accent"><h4>✅ Producto físico real</h4><p>El dinero viene de vender llaveros físicos, no de reclutar personas para que recluten personas.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 8 — POR QUÉ NO INFLA EL TOKEN -->
+<div class="slide slide-8">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">Tokenómica</span>
+    <h2 class="sec-title">¿Por qué <span class="g">$VIVE no se infla</span> con este programa?</h2>
+    <div class="cards cards-2" style="margin-top:16px;text-align:left">
+      <div class="card"><span class="icon">🏦</span><h4>Pool pre-asignado</h4><p>Todas las recompensas salen del "Pool Comunitario" (100M $VIVE ya asignados). <strong>No se crean tokens nuevos</strong>. Cero emisión adicional.</p></div>
+      <div class="card"><span class="icon">⏳</span><h4>El pool se agota = escasez</h4><p>A medida que el programa crece, el pool se reduce. Menor oferta + mayor demanda = precio sube para <strong>todos los holders</strong>, incluyendo los embajadores.</p></div>
+      <div class="card"><span class="icon">🔒</span><h4>Vesting de 3 meses</h4><p>Los $VIVE ganados como embajador tienen un cliff de 3 meses. Esto evita que nadie venda masivamente en el TGE.</p></div>
+      <div class="card accent"><span class="icon">📊</span><h4>Budget mensual fijo</h4><p>Máximo ~1.6M $VIVE/mes distribuibles. Si el programa crece mucho, se activa un cap individual por embajador.</p></div>
+    </div>
+    <div style="margin-top:16px;padding:12px 20px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px">
+      <p style="font-size:13px;color:var(--muted)">El crecimiento del programa <strong style="color:var(--light)">beneficia</strong> a todos los holders. Más usuarios → más demanda de $VIVE → precio sube → tus tokens ya ganados valen más.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 9 — PROYECCIÓN 12 MESES -->
+<div class="slide slide-9">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">El potencial</span>
+    <h2 class="sec-title">¿Cuánto puedes ganar en <span class="g">12 meses</span>?</h2>
+    <p class="subtitle" style="margin-bottom:20px">Escenario: <strong>20 llaveros activados/mes</strong> + 5 propiedades registradas</p>
+    <div class="vtable-wrap" style="margin-bottom:20px">
+      <table class="vtable">
+        <thead><tr><th>Fuente</th><th>12 meses</th></tr></thead>
+        <tbody>
+          <tr><td>Márgenes USD (20 llaveros/mes × $15 avg)</td><td class="val">$3,600 USD</td></tr>
+          <tr><td>$VIVE por llaveros (20 × 500 × 12 meses)</td><td class="val">120,000 $VIVE</td></tr>
+          <tr><td>$VIVE por propiedades (5/mes × 1,000 × 12)</td><td class="val">60,000 $VIVE</td></tr>
+          <tr><td><strong>Total $VIVE acumulados</strong></td><td class="val">180,000 $VIVE</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cards cards-3">
+      <div class="card"><div class="stat-big" style="font-size:28px">$3,600</div><div class="stat-label">USD en márgenes<br/>(garantizado)</div></div>
+      <div class="card accent"><div class="stat-big" style="font-size:28px">$18,000</div><div class="stat-label">Si $VIVE = $0.10<br/>(TGE objetivo)</div></div>
+      <div class="card gold"><div class="stat-big" style="font-size:28px">$180,000</div><div class="stat-label">Si $VIVE = $1.00<br/>(unicornio)</div></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+<!-- SLIDE 10 — CÓMO EMPEZAR -->
+<div class="slide slide-10">
+  <div class="slide-header"><span class="logo-text"><span class="v">Viven</span><span class="d">DApp</span></span></div>
+  <div class="content">
+    <span class="label">El primer paso</span>
+    <h2 class="sec-title">¿Cómo <span class="g">empezar hoy</span>?</h2>
+    <div class="steps" style="margin-bottom:28px">
+      <div class="step"><div class="step-n">1</div><h5>Activa TU llave</h5><p>Eres el primer creyente. Activa tu propio llavero VivenDapp antes de venderlos.</p></div>
+      <div class="step"><div class="step-n">2</div><h5>Compra tu pack</h5><p>Elige tu pack de embajador (Iniciación, Pro o Comercializador) en vivendapp.io.</p></div>
+      <div class="step"><div class="step-n">3</div><h5>Vende en tu red</h5><p>Empieza con las personas más cercanas. Los primeros 10 llaveros siempre son los más fáciles.</p></div>
+      <div class="step"><div class="step-n">4</div><h5>Cobra y acumula</h5><p>Recibe tus márgenes en USD hoy y tus $VIVE con cada activación.</p></div>
+    </div>
+    <div class="cta-group">
+      <a href="https://wa.me/573217480382?text=Quiero%20ser%20Embajador%20VivenDapp" target="_blank" class="btn btn-primary" style="font-size:17px;padding:18px 44px">Escríbele a VIVI ahora →</a>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:14px">vivendapp.io · +57 321 748 0382</p>
+  </div>
+  <div class="slide-footer"><span class="logo-text" style="font-size:13px"><span class="v">Viven</span><span class="d">DApp</span></span><span>·</span><span>vivendapp.io</span></div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>←</button>
+  <span id="progress">1 / 10</span>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+  <button class="full-btn" onclick="toggleFull()">⛶</button>
+</div>
+
+<script>
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+function navigate(d){
+  slides[cur].classList.remove('active');
+  cur=Math.max(0,Math.min(total-1,cur+d));
+  slides[cur].classList.add('active');
+  document.getElementById('progress').textContent=(cur+1)+' / '+total;
+  document.getElementById('prevBtn').disabled=cur===0;
+  document.getElementById('nextBtn').disabled=cur===total-1;
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') navigate(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') navigate(-1);
+});
+function toggleFull(){
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VivenDapp — Para Propietarios</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #32BB75;
+    --teal: #36BDAF;
+    --blue: #42BFEC;
+    --dark: #181936;
+    --light: #F2F4F4;
+    --grad: linear-gradient(135deg, #42BFEC, #36BDAF, #32BB75);
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(66,191,236,0.2);
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--dark);
+    color: var(--light);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  .presentation { position: relative; width: 100%; height: 100%; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(30px);
+  }
+  .slide.active { opacity: 1; pointer-events: all; transform: translateX(0); }
+  .slide.exit { opacity: 0; transform: translateX(-30px); }
+
+  .slide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px 16px;
+    border-bottom: 1px solid rgba(66,191,236,0.15);
+    flex-shrink: 0;
+  }
+  .logo { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.5rem; letter-spacing: -0.5px; }
+  .logo span:first-child { color: var(--blue); }
+  .logo span:last-child { color: var(--green); }
+  .progress-text { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: rgba(242,244,244,0.5); font-weight: 500; }
+
+  .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 60px;
+    overflow: hidden;
+  }
+
+  .slide-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 40px;
+    border-top: 1px solid rgba(66,191,236,0.1);
+    flex-shrink: 0;
+    gap: 32px;
+  }
+  .footer-brand { font-size: 0.8rem; color: rgba(242,244,244,0.4); font-weight: 500; letter-spacing: 0.5px; }
+
+  .nav-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(66,191,236,0.25);
+    color: var(--light);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-btn:hover { background: rgba(66,191,236,0.15); border-color: var(--blue); }
+  .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+  .slide-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  h1, h2, h3 { font-family: 'Nunito', sans-serif; font-weight: 900; line-height: 1.15; }
+
+  .headline-xl { font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: 20px; }
+  .headline-lg { font-size: clamp(1.6rem, 4vw, 2.6rem); text-align: center; margin-bottom: 16px; }
+  .headline-md { font-size: clamp(1.3rem, 3vw, 2rem); text-align: center; margin-bottom: 14px; }
+
+  .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: rgba(242,244,244,0.7);
+    text-align: center;
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .cards-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    max-width: 860px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px 18px;
+    flex: 1;
+    min-width: 180px;
+    max-width: 260px;
+  }
+  .card-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .card-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1rem; margin-bottom: 6px; }
+  .card-body { font-size: 0.85rem; color: rgba(242,244,244,0.6); line-height: 1.5; }
+
+  .big-number {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    display: block;
+  }
+
+  .steps-numbered {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 580px;
+    width: 100%;
+  }
+  .step-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .step-badge {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    min-width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .step-text { font-size: 0.88rem; font-weight: 500; line-height: 1.4; }
+
+  .benefit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 580px;
+    width: 100%;
+  }
+  .benefit-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+  .benefit-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  .comparison-row {
+    display: flex;
+    gap: 16px;
+    max-width: 700px;
+    width: 100%;
+    justify-content: center;
+  }
+  .compare-card {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px 18px;
+    text-align: center;
+  }
+  .compare-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(242,244,244,0.5);
+    margin-bottom: 10px;
+  }
+  .compare-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    display: block;
+  }
+  .compare-desc { font-size: 0.8rem; color: rgba(242,244,244,0.55); margin-top: 6px; }
+
+  .problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 580px;
+    width: 100%;
+  }
+  .problem-item {
+    background: rgba(255,80,80,0.06);
+    border: 1px solid rgba(255,80,80,0.2);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+  }
+  .problem-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .problem-title { font-weight: 700; margin-bottom: 3px; }
+  .problem-desc { color: rgba(242,244,244,0.6); line-height: 1.4; }
+
+  .benefit-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-width: 680px;
+    margin: 10px 0;
+  }
+  .tag {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .quote {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: rgba(242,244,244,0.85);
+    text-align: center;
+    font-style: italic;
+    max-width: 600px;
+    border-left: 3px solid var(--teal);
+    padding: 12px 20px;
+    background: var(--card-bg);
+    border-radius: 0 12px 12px 0;
+    margin: 14px 0;
+  }
+
+  .btn-cta {
+    background: var(--grad);
+    color: var(--dark);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 36px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(54,189,175,0.3);
+  }
+  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(54,189,175,0.45); }
+  .btn-cta-lg { font-size: 1.15rem; padding: 16px 44px; }
+
+  .cover-glow {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(50,187,117,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .who-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 700px;
+    width: 100%;
+    justify-content: center;
+  }
+  .who-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    flex: 1;
+    min-width: 200px;
+    max-width: 320px;
+  }
+  .who-item-head { font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .who-item-body { color: rgba(242,244,244,0.6); line-height: 1.5; }
+
+  .ecosystem-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+  }
+  .eco-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .slide-content { padding: 20px 24px; }
+    .slide-header { padding: 16px 24px 12px; }
+    .cards-row { gap: 10px; }
+    .card { min-width: 130px; padding: 16px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="presentation" id="presentation">
+
+  <!-- SLIDE 1: PORTADA -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">1 / 9</div>
+    </div>
+    <div class="slide-content" style="position:relative;">
+      <div class="cover-glow"></div>
+      <div class="slide-tag">Propietarios · Rentas Cortas</div>
+      <h1 class="headline-xl">
+        Tu propiedad.<br>
+        <span class="grad-text">Más rentable. Más visible.</span><br>
+        En blockchain.
+      </h1>
+      <p class="subtitle">Para propietarios de rentas cortas y propiedades vacacionales que quieren que su inversión trabaje más duro.</p>
+      <a href="https://wa.me/573217480382" class="btn-cta">Registra tu Propiedad →</a>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: ¿QUIÉN ERES? -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">2 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">¿Quién Eres?</div>
+      <h2 class="headline-lg">Tienes propiedades que<br><span class="grad-text">pueden dar más</span></h2>
+      <div class="who-grid">
+        <div class="who-item">
+          <div class="who-item-head">🏠 1-3 propiedades</div>
+          <div class="who-item-body">En destinos turísticos de LATAM. Cartagena, Medellín, Tulum, San Andrés y más.</div>
+        </div>
+        <div class="who-item">
+          <div class="who-item-head">📲 En Airbnb o Booking</div>
+          <div class="who-item-body">Las rentas con plataformas tradicionales que se quedan una tajada importante.</div>
+        </div>
+        <div class="who-item">
+          <div class="who-item-head">📈 Quieres más</div>
+          <div class="who-item-body">Más ocupación, más retorno, más visibilidad. Sin más trabajo manual.</div>
+        </div>
+        <div class="who-item">
+          <div class="who-item-head">🔑 No quieres vender</div>
+          <div class="who-item-body">Quieres que tu propiedad trabaje más duro — no desprenderte de ella.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: EL PROBLEMA -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">3 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">El Problema Hoy</div>
+      <h2 class="headline-lg">Las plataformas tradicionales<br><span class="grad-text">te están costando dinero</span></h2>
+      <div class="problem-list">
+        <div class="problem-item">
+          <div class="problem-icon">💸</div>
+          <div>
+            <div class="problem-title">Airbnb/Booking se quedan el 15-20%</div>
+            <div class="problem-desc">De todos tus ingresos, antes de que lleguen a tu cuenta. Todos los meses.</div>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">📉</div>
+          <div>
+            <div class="problem-title">Compites sin diferenciación</div>
+            <div class="problem-desc">Cientos de propiedades similares a la tuya en el mismo marketplace. Eres uno más.</div>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">🚫</div>
+          <div>
+            <div class="problem-title">Sin acceso a inversores</div>
+            <div class="problem-desc">No hay forma de que inversores globales pongan capital en tu propiedad específica.</div>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">😩</div>
+          <div>
+            <div class="problem-title">Administración manual y agotadora</div>
+            <div class="problem-desc">Mensajes 24/7, check-ins, limpieza, coordinación. Sin automatización real.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: LA SOLUCIÓN -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">4 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">La Solución VivenDapp</div>
+      <h2 class="headline-lg">Tu propiedad tokenizada.<br><span class="grad-text">Inversores globales. Tú administras.</span></h2>
+      <div class="cards-row">
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">Tokenizada en Polygon</div>
+          <div class="card-body">Smart Contract inmutable. Tu propiedad se convierte en un producto financiero digital.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">🌎</div>
+          <div class="card-title">Inversores Globales</div>
+          <div class="card-body">Compran fracciones en $VIVE. Capital nuevo que no tenías antes.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">💼</div>
+          <div class="card-title">Tú Sigues al Mando</div>
+          <div class="card-body">Eres el administrador. Cobras management fee del 8-12% anual.</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="card-icon">💧</div>
+          <div class="card-title">Liquidez Real</div>
+          <div class="card-body">Venta parcial de tu propiedad sin venderla toda. Liquidez sin perder el activo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: RENTAS CORTAS -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">5 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Rentas Cortas · Nuestro Foco</div>
+      <h2 class="headline-lg">Los números hablan<br>por sí solos</h2>
+      <div class="comparison-row" style="margin-bottom:18px;">
+        <div class="compare-card" style="border-color:rgba(50,187,117,0.4);">
+          <div class="compare-label">Rentas Cortas VivenDapp</div>
+          <span class="compare-num" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">15-25%</span>
+          <div class="compare-desc">retorno anual en destinos turísticos LATAM</div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-label">Arriendo Tradicional</div>
+          <span class="compare-num" style="color:rgba(242,244,244,0.5);">6-8%</span>
+          <div class="compare-desc">retorno anual promedio en LATAM</div>
+        </div>
+      </div>
+      <div class="benefit-tags">
+        <div class="tag">🌴 Turismo LATAM +12%/año</div>
+        <div class="tag">🏖️ Cartagena · Medellín · Santa Marta</div>
+        <div class="tag">🌊 San Andrés · Tulum · Bariloche · Cusco</div>
+      </div>
+      <p class="subtitle" style="font-size:0.85rem;margin-top:12px;">VivenDapp empieza aquí porque los números son mejores para todos — propietarios e inversores.</p>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: CÓMO FUNCIONA -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">6 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Cómo Funciona</div>
+      <h2 class="headline-lg">6 pasos para tokenizar<br><span class="grad-text">tu propiedad</span></h2>
+      <div class="steps-numbered">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-text">🏠 Registras tu propiedad en la plataforma VivenDapp</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-text">🔍 Due diligence + valoración profesional de tu propiedad</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-text">📜 Tokenización en Polygon mediante Smart Contract</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">4</div>
+          <div class="step-text">💰 Inversores globales compran fracciones en $VIVE</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">5</div>
+          <div class="step-text">💼 Tú administras la propiedad y cobras tu management fee</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">6</div>
+          <div class="step-text">⚡ Rendimientos distribuidos automáticamente por contrato</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: TUS BENEFICIOS -->
+  <div class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">7 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Tus Beneficios</div>
+      <h2 class="headline-lg">Lo que ganas al unirte<br><span class="grad-text">al ecosistema</span></h2>
+      <div class="benefit-list">
+        <div class="benefit-item">
+          <div class="benefit-icon">🪙</div>
+          <span><strong>500 $VIVE</strong> de bienvenida por primera propiedad registrada</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">💼</div>
+          <span><strong>Management fee 8-12% anual</strong> del capital tokenizado total</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">👁️</div>
+          <span><strong>Visibilidad ante miles de inversores</strong> de la comunidad VivenDapp</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🎯</div>
+          <span><strong>Co-branding y marketing gratuito</strong> — VivenDapp promociona tu propiedad</span>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">✅</div>
+          <span><strong>Sin exclusividad</strong> — sigue publicando en Airbnb/Booking sin problema</span>
+        </div>
+        <div class="benefit-item" style="border-color:rgba(66,191,236,0.35);background:rgba(66,191,236,0.08);">
+          <div class="benefit-icon">🚀</div>
+          <span><strong>Tu propiedad se vuelve un producto financiero global</strong></span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: EL ECOSISTEMA -->
+  <div class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">8 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">El Ecosistema que Crece Contigo</div>
+      <h2 class="headline-lg">Cada nuevo usuario hace<br><span class="grad-text">tu propiedad más valiosa</span></h2>
+      <div class="ecosystem-box" style="margin-bottom:18px;">
+        <span class="eco-num">100,000</span>
+        <p style="font-size:1rem;font-weight:600;margin-bottom:8px;">usuarios VivenDapp</p>
+        <p style="font-size:0.88rem;color:rgba(242,244,244,0.6);line-height:1.6;">= 100,000 potenciales huéspedes e inversores viendo tu propiedad directamente.<br>Sin intermediarios. Sin comisiones de plataforma.</p>
+      </div>
+      <div class="cards-row" style="max-width:640px;">
+        <div class="card" style="text-align:center;min-width:160px;">
+          <div class="card-icon">📈</div>
+          <div class="card-title">Más propietarios</div>
+          <div class="card-body">= más atractivo para inversores</div>
+        </div>
+        <div class="card" style="text-align:center;min-width:160px;">
+          <div class="card-icon">💰</div>
+          <div class="card-title">Más inversores</div>
+          <div class="card-body">= más capital para propiedades</div>
+        </div>
+        <div class="card" style="text-align:center;min-width:160px;">
+          <div class="card-icon">🏆</div>
+          <div class="card-title">Suma positiva</div>
+          <div class="card-body">Todos ganan cuando el protocolo crece</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: PRÓXIMO PASO -->
+  <div class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="logo"><span>Viven</span><span>DApp</span></div>
+      <div class="progress-text">9 / 9</div>
+    </div>
+    <div class="slide-content">
+      <div class="slide-tag">Próximo Paso</div>
+      <h2 class="headline-lg">Sé de los primeros propietarios<br><span class="grad-text">del ecosistema</span></h2>
+      <div class="card" style="max-width:560px;width:100%;text-align:center;padding:28px;margin-bottom:18px;">
+        <div style="font-size:1.8rem;margin-bottom:12px;">🪙</div>
+        <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.3rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;">500 $VIVE de Bienvenida</div>
+        <div style="font-size:0.88rem;color:rgba(242,244,244,0.65);line-height:1.6;">Por registrar tu primera propiedad en el ecosistema VivenDapp.</div>
+      </div>
+      <div class="steps-numbered" style="max-width:480px;">
+        <div class="step-item">
+          <div class="step-badge">1</div>
+          <div class="step-text">💬 Escríbele a VIVI por WhatsApp</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">2</div>
+          <div class="step-text">🔍 Due diligence de tu propiedad</div>
+        </div>
+        <div class="step-item">
+          <div class="step-badge">3</div>
+          <div class="step-text">🚀 Tokenización y visibilidad global</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
+        <a href="https://wa.me/573217480382" class="btn-cta btn-cta-lg">Escríbele a VIVI → wa.me/573217480382</a>
+      </div>
+      <p style="font-size:0.78rem;color:rgba(242,244,244,0.4);margin-top:10px;">vivendapp.io</p>
+    </div>
+    <div class="slide-footer">
+      <div class="footer-brand">VivenDApp · vivendapp.io</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;z-index:100;">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>←</button>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+</div>
+
+<script>
+  let current = 0;
+  const total = 9;
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  function showSlide(index) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => { slides[current].classList.remove('exit'); }, 500);
+    current = index;
+    slides[current].classList.add('active');
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next >= 0 && next < total) showSlide(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>
