@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>VivenDapp — Escenario Hostal</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--green:#32BB75;--teal:#36BDAF;--blue:#42BFEC;--dark:#181936;--light:#F2F4F4;--muted:rgba(242,244,244,0.58);--grad:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75)}
+html,body{background:var(--dark);color:var(--light);font-family:'Inter',sans-serif;min-height:100vh;scroll-behavior:smooth}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(66,191,236,.03)1px,transparent 1px),linear-gradient(90deg,rgba(66,191,236,.03)1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;background:rgba(24,25,54,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(66,191,236,.12);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;text-decoration:none}
+.logo .v{color:var(--blue)}.logo .d{color:var(--green)}
+.badge-live{display:flex;align-items:center;gap:6px;background:rgba(50,187,117,.12);border:1px solid rgba(50,187,117,.3);border-radius:100px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--green)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+
+/* SECTIONS */
+.page{position:relative;z-index:1;padding:0 0 80px}
+.section{padding:36px 20px}
+.section+.section{border-top:1px solid rgba(255,255,255,.06)}
+
+/* HERO */
+.hero{padding:44px 20px 36px;text-align:center}
+.s-label{display:block;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.hero-title{font-family:'Nunito',sans-serif;font-size:clamp(26px,7vw,40px);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:12px}
+.hero-title .g{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:15px;color:var(--muted);line-height:1.65;max-width:400px;margin:0 auto}
+
+/* PROPERTY CARD */
+.property-card{background:rgba(255,255,255,.04);border:1px solid rgba(66,191,236,.2);border-radius:16px;padding:22px;margin:20px 0}
+.prop-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.prop-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.prop-row:last-child{border-bottom:none}
+.prop-val{font-family:'Nunito',sans-serif;font-weight:800;color:var(--blue)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+.stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(66,191,236,.15);border-radius:14px;padding:18px 14px;text-align:center}
+.stat-card.green{border-color:rgba(50,187,117,.3);background:rgba(50,187,117,.05)}
+.stat-card.gold{border-color:rgba(255,215,0,.2);background:rgba(255,215,0,.03)}
+.stat-num{font-family:'Nunito',sans-serif;font-size:clamp(22px,5vw,28px);font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:var(--muted);line-height:1.45}
+
+/* CALC TABLE */
+.calc{background:rgba(255,255,255,.03);border:1px solid rgba(66,191,236,.15);border-radius:14px;overflow:hidden;margin:16px 0}
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.calc-row:last-child{border-bottom:none;background:rgba(50,187,117,.07);font-weight:700}
+.calc-label{color:var(--muted)}
+.calc-val{font-family:'Nunito',sans-serif;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* SCENARIO TABLE */
+.scenario{background:rgba(255,255,255,.03);border:1px solid rgba(66,191,236,.15);border-radius:14px;overflow:hidden;margin:16px 0}
+.sc-header{background:rgba(66,191,236,.07);padding:10px 16px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
+.sc-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;align-items:center}
+.sc-row:last-child{border-bottom:none;background:rgba(50,187,117,.06)}
+.sc-val{font-family:'Nunito',sans-serif;font-weight:800}
+.sc-val.green{color:var(--green)}.sc-val.gold{color:#FFD700}.sc-val.big{font-size:15px;color:var(--green)}
+
+/* INFOBOX */
+.infobox{border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.65;margin:12px 0}
+.ib-green{background:rgba(50,187,117,.07);border:1px solid rgba(50,187,117,.22)}
+.ib-blue{background:rgba(66,191,236,.06);border:1px solid rgba(66,191,236,.2)}
+.ib-gold{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2)}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.step{display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,.03);border:1px solid rgba(66,191,236,.12);border-radius:12px;padding:14px}
+.step-n{min-width:34px;height:34px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:var(--dark)}
+.step-text h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.step-text p{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* CTA */
+.cta-section{padding:32px 20px;text-align:center;background:linear-gradient(180deg,transparent,rgba(50,187,117,.06))}
+.cta-title{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;margin-bottom:8px}
+.cta-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 28px;border-radius:14px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;text-decoration:none;transition:all .2s;border:none;cursor:pointer;width:100%;justify-content:center;margin-bottom:10px}
+.btn-primary{background:var(--grad);color:var(--dark);box-shadow:0 8px 24px rgba(50,187,117,.35)}
+.btn-outline{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.15);color:var(--light)}
+
+h2{font-family:'Nunito',sans-serif;font-size:clamp(20px,5vw,26px);font-weight:900;margin-bottom:8px;letter-spacing:-0.5px}
+.sec-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<div class="header">
+  <a href="index.html" class="logo"><span class="v">Viven</span><span class="d">DApp</span></a>
+  <div class="badge-live"><span class="dot"></span>Escenario en vivo</div>
+</div>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <span class="s-label">Presentación para propietarios de hostal / hotel</span>
+  <h1 class="hero-title">170 camas.<br/><span class="g">¿Cuánto $VIVE<br/>ganas sin hacer nada?</span></h1>
+  <p class="hero-sub">Este escenario está calculado con los números reales de este hostal.</p>
+</div>
+
+<!-- TU HOSTAL HOY -->
+<div class="section">
+  <h2>Tu hostal, hoy</h2>
+  <div class="property-card">
+    <div class="prop-title">🏨 Hostal Actual</div>
+    <div class="prop-row"><span>Capacidad total</span><span class="prop-val">170 camas</span></div>
+    <div class="prop-row"><span>Cápsulas compartidas</span><span class="prop-val">desde $200K COP/noche</span></div>
+    <div class="prop-row"><span>Cabañas privadas</span><span class="prop-val">hasta $1M COP/noche</span></div>
+    <div class="prop-row"><span>Ocupación estimada 70%</span><span class="prop-val">~119 camas/noche</span></div>
+  </div>
+  <div class="infobox ib-blue">
+    Tu hostal es exactamente lo que VivenDapp necesita para demostrarle al mundo que el ecosistema funciona con activos reales.
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<div class="section">
+  <h2>Bed Staking — cómo funciona</h2>
+  <p class="sec-sub">Registras tu hostal en VivenDapp. El protocolo te recompensa en $VIVE mensualmente. <strong>No cambias nada de cómo operas.</strong></p>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">50</div>
+      <div class="stat-lbl">$VIVE / cama<br/>registrada / mes<br/>(solo por existir)</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-num">5</div>
+      <div class="stat-lbl">$VIVE por cada<br/>cama ocupada<br/>confirmada</div>
+    </div>
+    <div class="stat-card gold" style="grid-column:1/-1">
+      <div class="stat-num">10,000</div>
+      <div class="stat-lbl">$VIVE bono anual por ser Founding Partner del protocolo</div>
+    </div>
+  </div>
+</div>
+
+<!-- TU CÁLCULO -->
+<div class="section">
+  <h2>Tu cálculo mensual</h2>
+  <p class="sec-sub">Con 170 camas y 70% ocupación promedio:</p>
+  <div class="calc">
+    <div class="calc-row"><span class="calc-label">170 camas × 50 $VIVE base</span><span class="calc-val">8,500 $VIVE</span></div>
+    <div class="calc-row"><span class="calc-label">119 camas × 30 noches × 5 $VIVE</span><span class="calc-val">17,850 $VIVE</span></div>
+    <div class="calc-row"><span class="calc-label">Bono Founding Partner (÷12)</span><span class="calc-val">833 $VIVE</span></div>
+    <div class="calc-row"><span class="calc-label">📊 Total mensual</span><span class="calc-val" style="font-size:17px">27,183 $VIVE</span></div>
+  </div>
+  <div class="calc" style="border-color:rgba(50,187,117,.3)">
+    <div class="calc-row"><span class="calc-label">Total anual acumulado</span><span class="calc-val" style="font-size:17px">~326,200 $VIVE</span></div>
+  </div>
+</div>
+
+<!-- PROYECCIÓN -->
+<div class="section">
+  <h2>¿Cuánto vale eso en USD?</h2>
+  <p class="sec-sub">326,200 $VIVE / año, según el precio del token:</p>
+  <div class="scenario">
+    <div class="sc-header"><span>Escenario</span><span>Precio $VIVE</span><span>Valor año</span></div>
+    <div class="sc-row">
+      <span>Hoy (pre-TGE)</span>
+      <span class="sc-val">$0.001</span>
+      <span class="sc-val green">$326 / año</span>
+    </div>
+    <div class="sc-row">
+      <span>TGE (Q3 2026)</span>
+      <span class="sc-val">$0.01</span>
+      <span class="sc-val green">$3,262 / año</span>
+    </div>
+    <div class="sc-row">
+      <span>Post-TGE objetivo</span>
+      <span class="sc-val">$0.10</span>
+      <span class="sc-val green">$32,620 / año</span>
+    </div>
+    <div class="sc-row">
+      <span>🦄 Unicornio ($1B FDV)</span>
+      <span class="sc-val">$1.00</span>
+      <span class="sc-val big">$326,200 / año</span>
+    </div>
+  </div>
+  <div class="infobox ib-green">
+    ✅ Esto <strong>no reemplaza tus ingresos del hostal.</strong> Los $VIVE son ingresos adicionales. Tu hostal sigue facturando igual que hoy.
+  </div>
+</div>
+
+<!-- TIENES MÁS PROPIEDADES -->
+<div class="section">
+  <h2>¿Tienes más hoteles?</h2>
+  <p class="sec-sub">Cada propiedad que registres multiplica tus recompensas:</p>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">×2</div>
+      <div class="stat-lbl">propiedades →<br/>2× $VIVE</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-num">×5</div>
+      <div class="stat-lbl">propiedades →<br/>5× $VIVE</div>
+    </div>
+  </div>
+  <div class="infobox ib-blue">
+    💡 <strong>Eres exactamente el perfil que necesitamos</strong> como Founding Partner — un operador real con activos verificables, no solo un inversor especulativo.
+  </div>
+</div>
+
+<!-- LO QUE NO TIENES QUE HACER -->
+<div class="section">
+  <h2>Lo que NO tienes que hacer</h2>
+  <div class="calc">
+    <div class="calc-row"><span>❌ Vender parte de tu propiedad</span><span style="color:rgba(255,100,100,.7);font-weight:700">No</span></div>
+    <div class="calc-row"><span>❌ Compartir ingresos del hostal</span><span style="color:rgba(255,100,100,.7);font-weight:700">No</span></div>
+    <div class="calc-row"><span>❌ Cambiar cómo operas</span><span style="color:rgba(255,100,100,.7);font-weight:700">No</span></div>
+    <div class="calc-row"><span>❌ Saber de crypto o blockchain</span><span style="color:rgba(255,100,100,.7);font-weight:700">No</span></div>
+    <div class="calc-row"><span>✅ Solo registrar y confirmar ocupación</span><span style="color:var(--green);font-weight:700">Sí</span></div>
+  </div>
+</div>
+
+<!-- CÓMO EMPEZAR -->
+<div class="section">
+  <h2>Empezar toma 5 minutos</h2>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-text"><h4>Escríbele a VIVI por WhatsApp</h4><p>+57 321 748 0382 — el agente AI de VivenDapp te guía paso a paso</p></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-text"><h4>Describe tu propiedad</h4><p>Nombre, ubicación, número de camas, tipo de operación</p></div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-text"><h4>Verificación básica (48h)</h4><p>El equipo confirma que el activo existe. Simple.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-text"><h4>Empieza a acumular $VIVE</h4><p>Desde el mes 1. Sin más trámites.</p></div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="cta-title">¿Registramos este hostal hoy?</h2>
+  <p class="cta-sub">Estás en el momento perfecto — los Founding Partners acceden a las mejores condiciones antes del TGE.</p>
+  <a href="https://wa.me/573217480382?text=Hola%20VIVI%2C%20quiero%20registrar%20mi%20hostal%20en%20VivenDapp%20como%20Founding%20Partner" target="_blank" class="btn btn-primary">Hablar con VIVI ahora 💬</a>
+  <a href="https://vivendapp.io" target="_blank" class="btn btn-outline">Ver más en vivendapp.io</a>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>
