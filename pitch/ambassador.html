@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
 <title>Programa Embajadores — VivenDapp</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
@@ -112,23 +112,25 @@ h1,h2,h3,h4{font-family:'Nunito',sans-serif}
 .full-btn:hover{color:var(--light);border-color:rgba(255,255,255,.3)}
 /* responsive */
 @media(max-width:768px){
-  .slide{padding:56px 16px 80px}
+  .slide{padding:54px 16px 78px}
   .cards-3,.cards-4{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
-  .stats-row{gap:20px}.stat-div{display:none}
-  .hero-title{letter-spacing:-0.5px}
-  .sec-title{letter-spacing:-0.5px}
+  .stats-row{gap:16px}.stat-div{display:none}
+  .hero-title{letter-spacing:-0.5px;font-size:clamp(26px,7vw,40px)!important}
+  .sec-title{letter-spacing:-0.5px;font-size:clamp(20px,5vw,30px)!important}
   .vtable{font-size:12px}.vtable th,.vtable td{padding:8px 10px}
-  .lvl-box{min-width:120px;font-size:12px}
+  .lvl-box{min-width:110px;font-size:11px}
 }
 @media(max-width:500px){
-  .slide{padding:52px 14px 76px}
+  .slide{padding:50px 12px 72px}
   .cards-3,.cards-4,.cards-2{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
-  .vtable-wrap{overflow-x:auto}
-  .btn{padding:14px 24px;font-size:14px}
-  .stat-big{font-size:28px!important}
-  #nav{bottom:16px;padding:8px 16px;gap:12px}
+  .vtable-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .btn{padding:14px 24px;font-size:14px;width:100%;justify-content:center}
+  .stat-big{font-size:clamp(24px,6vw,36px)!important}
+  #nav{bottom:14px;padding:7px 14px;gap:10px}
+  .sub{font-size:13px}
+  .icon{font-size:22px!important}
 }
 </style>
 </head>
@@ -302,7 +304,8 @@ h1,h2,h3,h4{font-family:'Nunito',sans-serif}
   <div class="content">
     <span class="label">Tokenómica</span>
     <h2 class="sec-title">¿Por qué <span class="g">$VIVE no se infla</span> con este programa?</h2>
-    <div class="cards cards-2" style="margin-top:16px;text-align:left">
+    <p class="sub" style="margin-bottom:16px">El protocolo opera en un mercado de <strong>42.6M unidades</strong> en LATAM. Solo necesitamos el 1.2% para ser unicornio — hay espacio de sobra para crecer sin sobre-emitir tokens.</p>
+    <div class="cards cards-2" style="margin-top:0;text-align:left">
       <div class="card"><span class="icon">🏦</span><h4>Pool pre-asignado</h4><p>Todas las recompensas salen del "Pool Comunitario" (100M $VIVE ya asignados). <strong>No se crean tokens nuevos</strong>. Cero emisión adicional.</p></div>
       <div class="card"><span class="icon">⏳</span><h4>El pool se agota = escasez</h4><p>A medida que el programa crece, el pool se reduce. Menor oferta + mayor demanda = precio sube para <strong>todos los holders</strong>, incluyendo los embajadores.</p></div>
       <div class="card"><span class="icon">🔒</span><h4>Vesting de 3 meses</h4><p>Los $VIVE ganados como embajador tienen un cliff de 3 meses. Esto evita que nadie venda masivamente en el TGE.</p></div>

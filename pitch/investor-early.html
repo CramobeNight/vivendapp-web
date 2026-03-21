@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>VivenDapp — Investor Early Access</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -445,13 +445,23 @@
   }
 
   @media (max-width: 640px) {
-    .slide-content { padding: 20px 24px; }
-    .slide-header { padding: 16px 24px 12px; }
-    .cards-row, .steps-row, .opp-row { gap: 10px; }
-    .card, .step, .opp-card { min-width: 130px; padding: 16px 12px; }
-    .vive-table { font-size: 0.78rem; }
-    .vive-table td { padding: 10px 12px; }
-    .diagram-node { padding: 10px 12px; font-size: 0.75rem; }
+    .slide-content { padding: 16px 18px; }
+    .slide-header { padding: 14px 18px 10px; }
+    .cards-row, .steps-row, .opp-row { gap: 8px; flex-wrap: wrap; }
+    .card, .step, .opp-card { min-width: 120px; padding: 12px 10px; }
+    .vive-table { font-size: 0.75rem; }
+    .vive-table td, .vive-table th { padding: 8px 10px; }
+    .diagram-node { padding: 9px 10px; font-size: 0.72rem; }
+    .headline-xl { font-size: clamp(26px, 7vw, 42px); letter-spacing: -0.5px; }
+    .headline-lg { font-size: clamp(20px, 5vw, 32px); letter-spacing: -0.5px; }
+    .big-number { font-size: clamp(32px, 8vw, 52px); }
+    .nav-btn { min-width: 44px; min-height: 44px; }
+  }
+  @media (max-width: 400px) {
+    .slide-content { padding: 12px 14px; }
+    .card, .step { min-width: 100px; }
+    .benefit-tags { gap: 6px; }
+    .tag { font-size: 10px; padding: 4px 10px; }
   }
 </style>
 </head>
@@ -553,34 +563,25 @@
     </div>
     <div class="slide-content">
       <div class="slide-tag">El Mercado</div>
-      <h2 class="headline-lg">Una oportunidad <span class="grad-text">histórica</span></h2>
-      <div style="text-align:center;margin:8px 0 20px;">
-        <span class="big-number">$2.5 Trillones</span>
-        <p style="font-size:0.9rem;color:rgba(242,244,244,0.6);margin-top:4px;">mercado inmobiliario LATAM — solo <strong style="color:var(--blue);">0.04% tokenizado</strong></p>
-      </div>
-      <div class="cards-row">
-        <div class="card" style="text-align:center;">
-          <div class="card-icon">🇨🇴</div>
-          <div class="card-title">Colombia</div>
-          <div class="card-body"><span class="grad-text" style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;">8-15%</span><br>valorización anual</div>
+      <h2 class="headline-lg">42 millones de unidades.<br/>Solo necesitamos el <span class="grad-text">1.2%.</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0">
+        <div class="card" style="text-align:center;padding:14px 8px">
+          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(18px,4vw,26px);background:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">2.3M</div>
+          <div style="font-size:11px;color:rgba(242,244,244,0.6);margin-top:3px">Hoteles & hostales<br/>LATAM</div>
         </div>
-        <div class="card" style="text-align:center;">
-          <div class="card-icon">🇲🇽</div>
-          <div class="card-title">México</div>
-          <div class="card-body" style="color:var(--teal);font-weight:600;font-size:0.9rem;">Mismo potencial</div>
+        <div class="card" style="text-align:center;padding:14px 8px">
+          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(18px,4vw,26px);background:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">1.3M</div>
+          <div style="font-size:11px;color:rgba(242,244,244,0.6);margin-top:3px">Vacation rentals<br/>(Airbnb, Booking)</div>
         </div>
-        <div class="card" style="text-align:center;">
-          <div class="card-icon">🇵🇪</div>
-          <div class="card-title">Perú</div>
-          <div class="card-body" style="color:var(--teal);font-weight:600;font-size:0.9rem;">Mismo potencial</div>
-        </div>
-        <div class="card" style="text-align:center;">
-          <div class="card-icon">🇦🇷</div>
-          <div class="card-title">Argentina</div>
-          <div class="card-body" style="color:var(--teal);font-weight:600;font-size:0.9rem;">Mismo potencial</div>
+        <div class="card" style="text-align:center;padding:14px 8px">
+          <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(18px,4vw,26px);background:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">39M</div>
+          <div style="font-size:11px;color:rgba(242,244,244,0.6);margin-top:3px">Arriendos<br/>residenciales</div>
         </div>
       </div>
-      <p class="subtitle" style="font-size:0.82rem;margin-top:14px;">Camino al unicornio: ser el protocolo líder en un mercado de $2.5T con menos del 1% de penetración digital.</p>
+      <div style="background:rgba(50,187,117,.07);border:1px solid rgba(50,187,117,.25);border-radius:12px;padding:12px 16px;font-size:13px;line-height:1.6;margin-bottom:10px">
+        💡 Para ser unicornio ($1B FDV) necesitamos <strong>300K–500K unidades activas</strong> — el <strong style="color:#32BB75">1.2% del mercado total.</strong> Uber tardó más en llegar al 3%.
+      </div>
+      <p class="subtitle" style="font-size:0.8rem;margin-top:6px">Fase 1: sector hotelero (nicho principal hoy) · Fase 2: vacation rental · Fase 3: arriendo residencial. $2.5T en activos subyacentes.</p>
     </div>
     <div class="slide-footer">
       <div class="footer-brand">VivenDApp · vivendapp.io</div>
@@ -659,6 +660,9 @@
           </tr>
         </tbody>
       </table>
+      <div style="background:rgba(66,191,236,.06);border:1px solid rgba(66,191,236,.2);border-radius:11px;padding:11px 14px;font-size:12px;line-height:1.6;margin-top:14px">
+        ⚡ <strong>Mecanismo anti-inflación:</strong> a mayor precio del token, menos $VIVE se emiten como recompensa. El USD value del reward crece lento; la emisión decrece. Deflacionario por diseño — como Bitcoin.
+      </div>
     </div>
     <div class="slide-footer">
       <div class="footer-brand">VivenDApp · vivendapp.io</div>
