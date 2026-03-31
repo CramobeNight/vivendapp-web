@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>VivenDapp — Simulador de Ganancias</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --green:#32BB75;--teal:#36BDAF;--blue:#42BFEC;
+  --dark:#181936;--dark2:#1e2147;
+  --light:#F2F4F4;--muted:rgba(242,244,244,0.55);
+  --grad:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);
+  --border:rgba(66,191,236,0.15);
+}
+html,body{background:var(--dark);color:var(--light);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;background-image:linear-gradient(rgba(66,191,236,.025)1px,transparent 1px),linear-gradient(90deg,rgba(66,191,236,.025)1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+
+/* ── HEADER ── */
+.header{position:sticky;top:0;z-index:100;background:rgba(24,25,54,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;text-decoration:none}
+.logo .v{color:var(--blue)}.logo .d{color:var(--green)}
+.header-tag{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:0;background:rgba(255,255,255,.04);border-radius:14px;padding:4px;margin:20px 16px 0;border:1px solid var(--border)}
+.tab{flex:1;padding:10px 6px;border:none;background:none;color:var(--muted);font-family:'Nunito',sans-serif;font-size:clamp(12px,3vw,14px);font-weight:800;cursor:pointer;border-radius:11px;transition:all .25s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tab .tab-icon{font-size:clamp(16px,4vw,20px)}
+.tab.active{background:var(--dark2);color:var(--light);box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.tab.active .tab-icon{filter:none}
+
+/* ── PANEL ── */
+.panel{display:none;position:relative;z-index:1;padding:20px 16px 100px}
+.panel.active{display:block}
+
+/* ── SECTION LABEL ── */
+.s-label{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;display:block}
+
+/* ── INPUT GROUP ── */
+.input-group{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.input-label{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;display:block}
+.range-display{font-family:'Nunito',sans-serif;font-size:clamp(24px,6vw,32px);font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:8px}
+.range-sub{font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px}
+
+input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:6px;background:rgba(255,255,255,.08);
+  border-radius:100px;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--grad);cursor:pointer;
+  box-shadow:0 2px 8px rgba(50,187,117,.5);
+}
+input[type=range]::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--grad);cursor:pointer;border:none;
+}
+
+/* ── SELECT ── */
+.select-wrap{position:relative}
+.select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--teal);font-size:14px;pointer-events:none}
+select{
+  width:100%;padding:12px 36px 12px 14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border);
+  border-radius:11px;color:var(--light);
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+  -webkit-appearance:none;appearance:none;cursor:pointer;outline:none;
+}
+select option{background:#1e2147;color:#F2F4F4}
+
+/* ── TOGGLE CHIPS ── */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.chip{padding:8px 14px;border-radius:100px;border:1.5px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
+.chip.active{background:rgba(50,187,117,.12);border-color:rgba(50,187,117,.4);color:var(--green)}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:20px 0}
+
+/* ── RESULTS HEADER ── */
+.results-header{text-align:center;margin-bottom:16px}
+.results-title{font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;margin-bottom:4px}
+.vive-total{font-family:'Nunito',sans-serif;font-size:clamp(36px,9vw,56px);font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.vive-label{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* ── SCENARIO CARDS ── */
+.scenarios{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.sc-card{border-radius:14px;padding:16px 12px;text-align:center;border:1px solid}
+.sc-card.c0{background:rgba(66,191,236,.05);border-color:rgba(66,191,236,.2)}
+.sc-card.c1{background:rgba(54,189,175,.06);border-color:rgba(54,189,175,.25)}
+.sc-card.c2{background:rgba(50,187,117,.07);border-color:rgba(50,187,117,.3)}
+.sc-card.c3{background:rgba(255,215,0,.05);border-color:rgba(255,215,0,.25)}
+.sc-label{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;opacity:.7}
+.sc-card.c0 .sc-label{color:var(--blue)}
+.sc-card.c1 .sc-label{color:var(--teal)}
+.sc-card.c2 .sc-label{color:var(--green)}
+.sc-card.c3 .sc-label{color:#FFD700}
+.sc-price{font-size:11px;color:var(--muted);margin-bottom:4px}
+.sc-val{font-family:'Nunito',sans-serif;font-size:clamp(18px,4.5vw,24px);font-weight:900}
+.sc-card.c0 .sc-val{color:var(--blue)}
+.sc-card.c1 .sc-val{color:var(--teal)}
+.sc-card.c2 .sc-val{color:var(--green)}
+.sc-card.c3 .sc-val{color:#FFD700}
+.sc-roi{font-size:11px;font-weight:700;margin-top:3px;opacity:.75}
+
+/* ── INFO BOX ── */
+.infobox{border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.65;margin-top:12px}
+.ib-g{background:rgba(50,187,117,.07);border:1px solid rgba(50,187,117,.2)}
+.ib-b{background:rgba(66,191,236,.06);border:1px solid rgba(66,191,236,.2)}
+.ib-gold{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2)}
+
+/* ── BREAKDOWN ── */
+.breakdown{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-top:14px}
+.bk-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.bk-row:last-child{border-bottom:none;background:rgba(50,187,117,.05);font-weight:700}
+.bk-label{color:var(--muted)}
+.bk-val{font-family:'Nunito',sans-serif;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ── CTA BUTTON ── */
+.cta-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(24,25,54,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:12px 16px;display:flex;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:14px;border-radius:13px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;text-decoration:none;border:none;cursor:pointer;transition:all .2s;flex:1}
+.btn-primary{background:var(--grad);color:var(--dark);box-shadow:0 4px 18px rgba(50,187,117,.35)}
+.btn-outline{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.15);color:var(--light);flex:0 0 auto;padding:14px 16px;font-size:13px}
+
+/* ── NOTA LEGAL ── */
+.nota{font-size:11px;color:rgba(242,244,244,.3);text-align:center;padding:12px 16px 0;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<div class="header">
+  <a href="index.html" class="logo"><span class="v">Viven</span><span class="d">DApp</span></a>
+  <span class="header-tag">Simulador</span>
+</div>
+
+<!-- ── TABS ── -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(0)"><span class="tab-icon">💎</span>Inversor</button>
+  <button class="tab" onclick="switchTab(1)"><span class="tab-icon">🏨</span>Propietario</button>
+  <button class="tab" onclick="switchTab(2)"><span class="tab-icon">🤝</span>Embajador</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 0 — INVERSOR
+══════════════════════════════════════ -->
+<div class="panel active" id="panel-0">
+
+  <div class="input-group" style="margin-top:16px">
+    <span class="s-label">¿Cuánto quieres invertir?</span>
+    <div class="range-display" id="inv-display">$500 USD</div>
+    <div class="range-sub">Equivale a <span id="inv-llaves">5</span> llaveros</div>
+    <input type="range" id="inv-amount" min="100" max="10000" step="100" value="500"
+      oninput="updateInvestor()"/>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>$100</span><span>$10,000</span></div>
+  </div>
+
+  <div class="input-group">
+    <span class="s-label">Tier de llavero</span>
+    <div class="chips" id="inv-tier-chips">
+      <div class="chip active" data-tier="0" onclick="selectTier(0)">👑 Founders $100</div>
+      <div class="chip" data-tier="1" onclick="selectTier(1)">⭐ Early $50</div>
+      <div class="chip" data-tier="2" onclick="selectTier(2)">🌿 Comunidad $25</div>
+      <div class="chip" data-tier="3" onclick="selectTier(3)">🔑 General $10</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="results-header">
+    <div class="results-title">Tus $VIVE totales</div>
+    <div class="vive-total" id="inv-vive">500,000</div>
+    <div class="vive-label" id="inv-vive-sub">5 llaveros × 100,000 $VIVE/llavero · Vesting 24 meses</div>
+  </div>
+
+  <div class="scenarios" id="inv-scenarios"></div>
+
+  <div class="infobox ib-g" style="margin-top:14px">
+    ✅ <strong>Vesting escalonado:</strong> los $VIVE se liberan gradualmente después del período de cliff — no hay dump masivo en el TGE. El precio tiene soporte estructural.
+  </div>
+  <p class="nota">Proyecciones no garantizan rendimientos. El precio del token depende del crecimiento del protocolo.</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 1 — PROPIETARIO
+══════════════════════════════════════ -->
+<div class="panel" id="panel-1">
+
+  <div class="input-group" style="margin-top:16px">
+    <span class="s-label">Número de camas / unidades</span>
+    <div class="range-display" id="prop-beds-display">170 camas</div>
+    <input type="range" id="prop-beds" min="1" max="500" step="1" value="170"
+      oninput="updateProperty()"/>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>1</span><span>500</span></div>
+  </div>
+
+  <div class="input-group">
+    <span class="s-label">Ocupación promedio</span>
+    <div class="range-display" id="prop-occ-display">70%</div>
+    <input type="range" id="prop-occ" min="20" max="100" step="5" value="70"
+      oninput="updateProperty()"/>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>20%</span><span>100%</span></div>
+  </div>
+
+  <div class="input-group">
+    <span class="s-label">Período de staking</span>
+    <div class="chips" id="prop-period-chips">
+      <div class="chip" data-period="6" onclick="selectPeriod(6)">6 meses</div>
+      <div class="chip active" data-period="12" onclick="selectPeriod(12)">12 meses ⭐</div>
+      <div class="chip" data-period="24" onclick="selectPeriod(24)">24 meses</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="breakdown" id="prop-breakdown"></div>
+
+  <div class="results-header" style="margin-top:14px">
+    <div class="results-title">$VIVE acumulados</div>
+    <div class="vive-total" id="prop-vive">108,000</div>
+    <div class="vive-label" id="prop-vive-sub">en 12 meses · property staking</div>
+  </div>
+
+  <div class="scenarios" id="prop-scenarios"></div>
+
+  <div class="infobox ib-b" style="margin-top:14px">
+    💡 <strong>Sin ceder nada:</strong> tu propiedad sigue siendo 100% tuya. Los $VIVE son adicionales a tus ingresos actuales de renta.
+  </div>
+  <p class="nota">Proyecciones no garantizan rendimientos. El precio del token depende del crecimiento del protocolo.</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL 2 — EMBAJADOR
+══════════════════════════════════════ -->
+<div class="panel" id="panel-2">
+
+  <div class="input-group" style="margin-top:16px">
+    <span class="s-label">Llaveros vendidos por mes</span>
+    <div class="range-display" id="amb-sales-display">5 llaveros/mes</div>
+    <input type="range" id="amb-sales" min="1" max="50" step="1" value="5"
+      oninput="updateAmbassador()"/>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>1</span><span>50/mes</span></div>
+  </div>
+
+  <div class="input-group">
+    <span class="s-label">Precio promedio de llavero</span>
+    <div class="chips" id="amb-tier-chips">
+      <div class="chip active" data-price="100" onclick="selectAmbTier(100)">Founders $100</div>
+      <div class="chip" data-price="50" onclick="selectAmbTier(50)">Early $50</div>
+      <div class="chip" data-price="25" onclick="selectAmbTier(25)">Comunidad $25</div>
+      <div class="chip" data-price="10" onclick="selectAmbTier(10)">General $10</div>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <span class="s-label">Embajadores reclutados por mes</span>
+    <div class="range-display" id="amb-recruit-display">1 embajador/mes</div>
+    <input type="range" id="amb-recruit" min="0" max="10" step="1" value="1"
+      oninput="updateAmbassador()"/>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px"><span>0</span><span>10/mes</span></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="breakdown" id="amb-breakdown"></div>
+
+  <div class="results-header" style="margin-top:14px">
+    <div class="results-title">$VIVE acumulados en 12 meses</div>
+    <div class="vive-total" id="amb-vive">0</div>
+    <div class="vive-label">+ Ingresos USD inmediatos</div>
+  </div>
+
+  <div class="scenarios" id="amb-scenarios"></div>
+
+  <div class="infobox ib-b" style="margin-top:14px">
+    💸 <strong>Ingresos inmediatos:</strong> el margen de distribución lo recibes en efectivo al momento de la venta — sin esperar el TGE.
+  </div>
+  <p class="nota">Proyecciones no garantizan rendimientos. El precio del token depende del crecimiento del protocolo.</p>
+</div>
+
+<!-- ── CTA BAR ── -->
+<div class="cta-bar">
+  <a href="https://wa.me/573217480382?text=Quiero%20saber%20m%C3%A1s%20sobre%20VivenDapp" target="_blank" class="btn btn-primary">Hablar con VIVI →</a>
+  <a href="index.html" class="btn btn-outline">← Volver</a>
+</div>
+
+<script>
+// ── DATA ──
+const TIERS = [
+  {name:'Founders',price:100,vive:100000,vesting:'24m + cliff 3m'},
+  {name:'Early',   price:50, vive:40000, vesting:'18m + cliff 2m'},
+  {name:'Comunidad',price:25,vive:15000, vesting:'12m + cliff 1m'},
+  {name:'General', price:10, vive:5000,  vesting:'6m sin cliff'},
+];
+const SCENARIOS = [
+  {label:'Pre-TGE',   price:0.001,cls:'c0'},
+  {label:'TGE',       price:0.01, cls:'c1'},
+  {label:'Post-TGE',  price:0.10, cls:'c2'},
+  {label:'🦄 Unicornio',price:1.00,cls:'c3'},
+];
+const AMB_MARGIN = 0.35; // 35% margen embajador
+const VIVE_REFERRAL_DIRECT = 500;   // por llavero vendido
+const VIVE_RECRUIT = 2000;          // por embajador reclutado (1 sola vez)
+const PROP_RATE_BASE = 10;          // VIVE/cama/mes
+const PROP_RATE_ACTIVITY = 2;       // VIVE/cama-noche
+const PROP_BONUS = {6:0,12:2000,24:5000};
+const PROP_MULTIPLIER = {6:1,12:1,24:1.5};
+
+// ── STATE ──
+let inv = {amount:500, tierIdx:0};
+let prop = {beds:170, occ:70, period:12};
+let amb = {sales:5, price:100, recruit:1};
+
+// ── UTILS ──
+function fmt(n,prefix='',suffix=''){
+  if(n>=1e6) return prefix+(n/1e6).toFixed(2)+'M'+suffix;
+  if(n>=1e3) return prefix+n.toLocaleString('es-CO')+suffix;
+  return prefix+n.toLocaleString('es-CO')+suffix;
+}
+function fmtUSD(n){
+  if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M';
+  if(n>=1000) return '$'+(n/1000).toFixed(1)+'K';
+  return '$'+n.toFixed(0);
+}
+function scenarioHTML(vive, investedUSD){
+  return SCENARIOS.map(s=>{
+    const val = vive * s.price;
+    const roi = investedUSD ? ((val - investedUSD)/investedUSD*100) : null;
+    const roiStr = roi !== null ? `<div class="sc-roi">${roi>=0?'+':''}${roi.toFixed(0)}% ROI</div>` : '';
+    return `<div class="sc-card ${s.cls}">
+      <div class="sc-label">${s.label}</div>
+      <div class="sc-price">$VIVE = $${s.price.toFixed(3)}</div>
+      <div class="sc-val">${fmtUSD(val)}</div>
+      ${roiStr}
+    </div>`;
+  }).join('');
+}
+
+// ── INVESTOR ──
+function updateInvestor(){
+  const t = TIERS[inv.tierIdx];
+  inv.amount = parseInt(document.getElementById('inv-amount').value);
+  const llaves = Math.floor(inv.amount / t.price);
+  const vive = llaves * t.vive;
+  document.getElementById('inv-display').textContent = '$'+inv.amount.toLocaleString('es-CO')+' USD';
+  document.getElementById('inv-llaves').textContent = llaves;
+  document.getElementById('inv-vive').textContent = fmt(vive);
+  document.getElementById('inv-vive-sub').textContent =
+    `${llaves} llaveros × ${fmt(t.vive)} $VIVE · Vesting ${t.vesting}`;
+  document.getElementById('inv-scenarios').innerHTML = scenarioHTML(vive, inv.amount);
+}
+function selectTier(idx){
+  inv.tierIdx = idx;
+  document.querySelectorAll('#inv-tier-chips .chip').forEach((c,i)=>{
+    c.classList.toggle('active', i===idx);
+  });
+  const sl = document.getElementById('inv-amount');
+  const t = TIERS[idx];
+  sl.min = t.price;
+  sl.step = t.price;
+  if(inv.amount < t.price) inv.amount = t.price;
+  sl.value = inv.amount;
+  updateInvestor();
+}
+
+// ── PROPERTY ──
+function updateProperty(){
+  prop.beds = parseInt(document.getElementById('prop-beds').value);
+  prop.occ  = parseInt(document.getElementById('prop-occ').value);
+  document.getElementById('prop-beds-display').textContent = prop.beds+' camas';
+  document.getElementById('prop-occ-display').textContent  = prop.occ+'%';
+
+  const mult    = PROP_MULTIPLIER[prop.period];
+  const base    = prop.beds * PROP_RATE_BASE * prop.period * mult;
+  const act_nights = prop.beds * (prop.occ/100) * 30 * prop.period;
+  const activity   = act_nights * PROP_RATE_ACTIVITY;
+  const bonus      = PROP_BONUS[prop.period];
+  const total      = Math.round(base + activity + bonus);
+
+  document.getElementById('prop-breakdown').innerHTML = `
+    <div class="bk-row"><span class="bk-label">Staking base (${prop.beds} camas × ${PROP_RATE_BASE}×${prop.period}m)</span><span class="bk-val">${fmt(Math.round(base))}</span></div>
+    <div class="bk-row"><span class="bk-label">Actividad (${prop.occ}% ocupación)</span><span class="bk-val">${fmt(Math.round(activity))}</span></div>
+    <div class="bk-row"><span class="bk-label">Bono fidelidad ${prop.period}m</span><span class="bk-val">${fmt(bonus)}</span></div>
+    <div class="bk-row"><span class="bk-label">Total acumulado</span><span class="bk-val">${fmt(total)} $VIVE</span></div>
+  `;
+  document.getElementById('prop-vive').textContent = fmt(total);
+  document.getElementById('prop-vive-sub').textContent = `en ${prop.period} meses · property staking`;
+  document.getElementById('prop-scenarios').innerHTML = scenarioHTML(total, null);
+}
+function selectPeriod(p){
+  prop.period = p;
+  document.querySelectorAll('#prop-period-chips .chip').forEach(c=>{
+    c.classList.toggle('active', parseInt(c.dataset.period)===p);
+  });
+  updateProperty();
+}
+
+// ── AMBASSADOR ──
+function updateAmbassador(){
+  amb.sales   = parseInt(document.getElementById('amb-sales').value);
+  amb.recruit = parseInt(document.getElementById('amb-recruit').value);
+  document.getElementById('amb-sales-display').textContent   = amb.sales+' llaveros/mes';
+  document.getElementById('amb-recruit-display').textContent = amb.recruit+' embajador'+(amb.recruit===1?'':'es')+'/mes';
+
+  const annual_sales   = amb.sales * 12;
+  const annual_recruit = amb.recruit * 12;
+  const margin_usd     = amb.sales * amb.price * AMB_MARGIN * 12;
+  const vive_direct    = annual_sales  * VIVE_REFERRAL_DIRECT;
+  const vive_recruit   = annual_recruit * VIVE_RECRUIT;
+  const total_vive     = vive_direct + vive_recruit;
+
+  document.getElementById('amb-breakdown').innerHTML = `
+    <div class="bk-row"><span class="bk-label">Margen distribución (35%)</span><span class="bk-val" style="color:var(--green);-webkit-text-fill-color:var(--green)">$${margin_usd.toLocaleString('es-CO')} USD/año</span></div>
+    <div class="bk-row"><span class="bk-label">${annual_sales} llaveros × 500 $VIVE</span><span class="bk-val">${fmt(vive_direct)}</span></div>
+    <div class="bk-row"><span class="bk-label">${annual_recruit} embajadores × 2,000 $VIVE</span><span class="bk-val">${fmt(vive_recruit)}</span></div>
+    <div class="bk-row"><span class="bk-label">Total $VIVE acumulado</span><span class="bk-val">${fmt(total_vive)}</span></div>
+  `;
+  document.getElementById('amb-vive').textContent = fmt(total_vive);
+  document.getElementById('amb-scenarios').innerHTML = scenarioHTML(total_vive, null);
+}
+function selectAmbTier(p){
+  amb.price = p;
+  document.querySelectorAll('#amb-tier-chips .chip').forEach(c=>{
+    c.classList.toggle('active', parseInt(c.dataset.price)===p);
+  });
+  updateAmbassador();
+}
+
+// ── TABS ──
+function switchTab(idx){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+// ── INIT ──
+updateInvestor();
+updateProperty();
+updateAmbassador();
+</script>
+</body>
+</html>
