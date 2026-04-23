@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Política de Privacidad — VivenDapp</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --green:#32BB75;--teal:#36BDAF;--blue:#42BFEC;
+  --dark:#181936;--light:#F2F4F4;
+  --border:rgba(66,191,236,0.15);
+  --grad:linear-gradient(135deg,#42BFEC,#36BDAF,#32BB75);
+}
+body{background:var(--dark);color:var(--light);font-family:'Inter',sans-serif;font-size:15px;line-height:1.8;}
+.bg{position:fixed;inset:0;background-image:linear-gradient(rgba(66,191,236,.025)1px,transparent 1px),linear-gradient(90deg,rgba(66,191,236,.025)1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;}
+.wrap{max-width:780px;margin:0 auto;padding:40px 24px 80px;position:relative;z-index:1;}
+
+/* HEADER */
+.header{text-align:center;padding:40px 0 36px;border-bottom:1px solid var(--border);margin-bottom:44px;}
+.logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;margin-bottom:6px;}
+.logo .v{color:var(--blue)}.logo .d{color:var(--green)}
+.doc-tag{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:10px;}
+.page-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(22px,5vw,30px);margin-bottom:8px;}
+.updated{font-size:12px;color:rgba(242,244,244,0.5);}
+
+/* LANG SWITCH */
+.lang-switch{display:flex;justify-content:center;gap:12px;margin:20px 0 0;}
+.lang-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--light);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.lang-btn.active{background:rgba(66,191,236,.15);border-color:var(--blue);color:var(--blue);}
+
+/* CONTENT */
+.content-es,.content-en{display:none;}
+.content-es.show,.content-en.show{display:block;}
+
+.section{margin-bottom:36px;}
+.section h2{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.section h2 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.section p{color:rgba(242,244,244,0.82);margin-bottom:10px;}
+.section ul{list-style:none;padding:0;margin:10px 0;}
+.section ul li{padding:6px 0 6px 20px;position:relative;color:rgba(242,244,244,0.82);font-size:14px;}
+.section ul li::before{content:'→';position:absolute;left:0;color:var(--teal);font-weight:700;}
+.section a{color:var(--blue);text-decoration:none;}
+.section a:hover{text-decoration:underline;}
+
+.card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:12px 0;}
+.card-title{font-weight:700;font-size:14px;margin-bottom:6px;color:var(--blue);}
+.card-body{font-size:13px;color:rgba(242,244,244,0.7);line-height:1.7;}
+
+/* FOOTER */
+.footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);font-size:12px;color:rgba(242,244,244,0.4);}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+
+  <div class="header">
+    <span class="doc-tag">Política de Privacidad / Privacy Policy</span>
+    <div class="logo"><span class="v">Viven</span><span class="d">Dapp</span></div>
+    <h1 class="page-title">Política de Privacidad</h1>
+    <p class="updated">Última actualización: 23 de abril de 2026 &nbsp;·&nbsp; Last updated: April 23, 2026</p>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('es')">🇨🇴 Español</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
+    </div>
+  </div>
+
+  <!-- ===== ESPAÑOL ===== -->
+  <div class="content-es show">
+
+    <div class="section">
+      <h2><span>1.</span> Introducción</h2>
+      <p>VivenDapp ("nosotros", "nuestro" o "la plataforma") se compromete a proteger la privacidad y los datos personales de sus usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos la información cuando utilizas nuestra aplicación móvil, sitio web (vivendapp.io), agente de WhatsApp (VIVI) y cualquier otro servicio asociado.</p>
+      <p>Al usar nuestros servicios, aceptas las prácticas descritas en esta política. Si no estás de acuerdo, te pedimos que no uses nuestros servicios.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>2.</span> Información que recopilamos</h2>
+      <p>Recopilamos los siguientes tipos de información:</p>
+
+      <div class="card">
+        <div class="card-title">📋 Información que tú nos proporcionas</div>
+        <div class="card-body">
+          <ul class="section" style="margin:0"><ul>
+            <li>Nombre completo y datos de identificación</li>
+            <li>Número de teléfono (WhatsApp)</li>
+            <li>Ciudad de residencia</li>
+            <li>Correo electrónico</li>
+            <li>Información de propiedades inmobiliarias (si aplica)</li>
+            <li>Estimados de capacidad de ahorro mensual</li>
+            <li>Código de llave de acceso (VIVE####)</li>
+          </ul></ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 Información recopilada automáticamente</div>
+        <div class="card-body">
+          <ul class="section" style="margin:0"><ul>
+            <li>Dirección IP y datos de dispositivo</li>
+            <li>Tipo de navegador y sistema operativo</li>
+            <li>Páginas visitadas y tiempo de sesión</li>
+            <li>Datos de uso del agente conversacional (VIVI)</li>
+            <li>Historial de conversaciones en WhatsApp con VIVI (para mejorar el servicio)</li>
+          </ul></ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔗 Información de terceros (Facebook/Meta)</div>
+        <div class="card-body">
+          Si decides conectar tu cuenta de Facebook o usar el inicio de sesión con Facebook, podemos recibir:
+          <ul class="section" style="margin:4px 0 0"><ul>
+            <li>Nombre y foto de perfil pública</li>
+            <li>Dirección de correo electrónico vinculada a tu cuenta</li>
+            <li>ID de usuario de Facebook</li>
+          </ul></ul>
+          Solo solicitamos los permisos mínimos necesarios para autenticarte. No publicamos en tu nombre ni accedemos a tu lista de amigos sin tu consentimiento explícito.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💎 Datos blockchain y de tokens</div>
+        <div class="card-body">
+          <ul class="section" style="margin:0"><ul>
+            <li>Dirección de wallet (pública por naturaleza de blockchain)</li>
+            <li>Asignaciones de $VIVE y programas de vesting</li>
+            <li>Historial de transacciones en el protocolo</li>
+          </ul></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span>3.</span> Cómo usamos tu información</h2>
+      <ul>
+        <li>Crear y gestionar tu cuenta en VivenDapp</li>
+        <li>Procesar la activación de tu llave física y asignación de $VIVE</li>
+        <li>Operar el agente VIVI para atenderte por WhatsApp</li>
+        <li>Registrar y gestionar propiedades en el protocolo</li>
+        <li>Enviarte notificaciones sobre tu cuenta, tokens y eventos del protocolo</li>
+        <li>Mejorar nuestros servicios y experiencia de usuario</li>
+        <li>Cumplir obligaciones legales y prevenir fraudes</li>
+        <li>Contactarte con información relevante sobre VivenDapp (puedes optar por no recibirla)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span>4.</span> Cómo compartimos tu información</h2>
+      <p>No vendemos, alquilamos ni compartimos tu información personal con terceros para fines comerciales propios de esos terceros. Solo compartimos datos en los siguientes casos:</p>
+      <ul>
+        <li><strong>Proveedores de servicios:</strong> empresas que nos ayudan a operar la plataforma (Supabase, OpenAI, servicios de mensajería). Estos proveedores solo acceden a los datos necesarios y están obligados a protegerlos.</li>
+        <li><strong>Cumplimiento legal:</strong> cuando una autoridad competente lo requiera conforme a la ley colombiana aplicable.</li>
+        <li><strong>Blockchain pública:</strong> las transacciones de tokens y direcciones de wallet son públicas por la naturaleza de la tecnología blockchain.</li>
+        <li><strong>Con tu consentimiento:</strong> en cualquier otro caso, solo con tu autorización explícita.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span>5.</span> Almacenamiento y seguridad</h2>
+      <p>Tus datos se almacenan en servidores seguros con cifrado en tránsito (TLS/HTTPS) y en reposo. Usamos servicios de base de datos gestionados con controles de acceso estrictos.</p>
+      <p>Ningún sistema es 100% seguro. En caso de una brecha de seguridad que afecte tus datos, te notificaremos dentro de los plazos establecidos por la ley colombiana (Ley 1581 de 2012).</p>
+    </div>
+
+    <div class="section">
+      <h2><span>6.</span> Tus derechos</h2>
+      <p>De acuerdo con la Ley 1581 de 2012 (Protección de Datos Personales de Colombia) y normativa aplicable, tienes derecho a:</p>
+      <ul>
+        <li><strong>Acceso:</strong> conocer qué datos tuyos tenemos almacenados</li>
+        <li><strong>Corrección:</strong> solicitar la corrección de datos incorrectos o incompletos</li>
+        <li><strong>Eliminación:</strong> pedir la eliminación de tus datos cuando no sean necesarios para la prestación del servicio</li>
+        <li><strong>Portabilidad:</strong> recibir tus datos en formato estructurado</li>
+        <li><strong>Oposición:</strong> oponerte al tratamiento de tus datos para fines de marketing</li>
+        <li><strong>Revocación del consentimiento:</strong> retirar tu consentimiento en cualquier momento</li>
+      </ul>
+      <p>Para ejercer estos derechos, escríbenos a: <a href="mailto:privacidad@vivendapp.io">privacidad@vivendapp.io</a></p>
+    </div>
+
+    <div class="section">
+      <h2><span>7.</span> Cookies y tecnologías similares</h2>
+      <p>Nuestro sitio web puede usar cookies propias para mantener tu sesión activa y mejorar tu experiencia. No usamos cookies de terceros para publicidad comportamental sin tu consentimiento.</p>
+      <p>Puedes configurar tu navegador para rechazar cookies, aunque esto puede afectar algunas funcionalidades del sitio.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>8.</span> Menores de edad</h2>
+      <p>VivenDapp no está dirigido a personas menores de 18 años. No recopilamos intencionalmente información de menores. Si detectamos que un menor ha proporcionado sus datos sin autorización, los eliminaremos de inmediato.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>9.</span> Cambios a esta política</h2>
+      <p>Podemos actualizar esta Política de Privacidad periódicamente. Te notificaremos sobre cambios significativos a través de la aplicación, correo electrónico o WhatsApp. La fecha de "última actualización" al inicio de este documento indica cuándo se realizó la revisión más reciente.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>10.</span> Contacto</h2>
+      <p>Para cualquier pregunta, queja o solicitud relacionada con esta Política de Privacidad:</p>
+      <div class="card">
+        <div class="card-body">
+          <strong>VivenDapp</strong><br/>
+          📧 <a href="mailto:privacidad@vivendapp.io">privacidad@vivendapp.io</a><br/>
+          🌐 <a href="https://vivendapp.io">vivendapp.io</a><br/>
+          💬 WhatsApp: +57 321 748 0382<br/>
+          📍 Bogotá, Colombia
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- FIN ESPAÑOL -->
+
+  <!-- ===== ENGLISH ===== -->
+  <div class="content-en">
+
+    <div class="section">
+      <h2><span>1.</span> Introduction</h2>
+      <p>VivenDapp ("we", "our", or "the platform") is committed to protecting the privacy and personal data of its users. This Privacy Policy describes how we collect, use, store, and protect information when you use our mobile application, website (vivendapp.io), WhatsApp agent (VIVI), and any other associated services.</p>
+      <p>By using our services, you agree to the practices described in this policy. If you do not agree, please do not use our services.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>2.</span> Information We Collect</h2>
+
+      <div class="card">
+        <div class="card-title">📋 Information You Provide</div>
+        <div class="card-body">
+          <ul class="section" style="margin:0"><ul>
+            <li>Full name and identification data</li>
+            <li>Phone number (WhatsApp)</li>
+            <li>City of residence</li>
+            <li>Email address</li>
+            <li>Real estate property information (if applicable)</li>
+            <li>Estimated monthly savings capacity</li>
+            <li>Access key code (VIVE####)</li>
+          </ul></ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 Automatically Collected Information</div>
+        <div class="card-body">
+          <ul class="section" style="margin:0"><ul>
+            <li>IP address and device data</li>
+            <li>Browser type and operating system</li>
+            <li>Pages visited and session time</li>
+            <li>Conversational agent (VIVI) usage data</li>
+            <li>WhatsApp conversation history with VIVI (to improve service quality)</li>
+          </ul></ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔗 Third-Party Information (Facebook/Meta)</div>
+        <div class="card-body">
+          If you choose to connect your Facebook account or use Facebook Login, we may receive:
+          <ul class="section" style="margin:4px 0 0"><ul>
+            <li>Public profile name and photo</li>
+            <li>Email address linked to your account</li>
+            <li>Facebook user ID</li>
+          </ul></ul>
+          We only request the minimum permissions necessary to authenticate you. We do not post on your behalf or access your friend list without your explicit consent.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💎 Blockchain and Token Data</div>
+        <div class="card-body">
+          <ul class="section" style="margin:0"><ul>
+            <li>Wallet address (public by the nature of blockchain)</li>
+            <li>$VIVE token allocations and vesting schedules</li>
+            <li>Transaction history on the protocol</li>
+          </ul></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><span>3.</span> How We Use Your Information</h2>
+      <ul>
+        <li>Create and manage your VivenDapp account</li>
+        <li>Process your physical key activation and $VIVE allocation</li>
+        <li>Operate the VIVI agent to serve you via WhatsApp</li>
+        <li>Register and manage properties on the protocol</li>
+        <li>Send you notifications about your account, tokens, and protocol events</li>
+        <li>Improve our services and user experience</li>
+        <li>Comply with legal obligations and prevent fraud</li>
+        <li>Contact you with relevant VivenDapp information (you may opt out)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span>4.</span> How We Share Your Information</h2>
+      <p>We do not sell, rent, or share your personal information with third parties for their own commercial purposes. We only share data in the following cases:</p>
+      <ul>
+        <li><strong>Service providers:</strong> companies that help us operate the platform (Supabase, OpenAI, messaging services). These providers only access necessary data and are required to protect it.</li>
+        <li><strong>Legal compliance:</strong> when required by a competent authority under applicable Colombian law.</li>
+        <li><strong>Public blockchain:</strong> token transactions and wallet addresses are public by the nature of blockchain technology.</li>
+        <li><strong>With your consent:</strong> in any other case, only with your explicit authorization.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span>5.</span> Storage and Security</h2>
+      <p>Your data is stored on secure servers with encryption in transit (TLS/HTTPS) and at rest. We use managed database services with strict access controls.</p>
+      <p>No system is 100% secure. In the event of a security breach affecting your data, we will notify you within the timeframes established by Colombian law.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>6.</span> Your Rights</h2>
+      <p>In accordance with applicable privacy regulations, you have the right to:</p>
+      <ul>
+        <li><strong>Access:</strong> know what data we have stored about you</li>
+        <li><strong>Correction:</strong> request correction of incorrect or incomplete data</li>
+        <li><strong>Deletion:</strong> request deletion of your data when no longer necessary</li>
+        <li><strong>Portability:</strong> receive your data in a structured format</li>
+        <li><strong>Opposition:</strong> object to data processing for marketing purposes</li>
+        <li><strong>Consent withdrawal:</strong> withdraw your consent at any time</li>
+      </ul>
+      <p>To exercise these rights, contact us at: <a href="mailto:privacidad@vivendapp.io">privacidad@vivendapp.io</a></p>
+    </div>
+
+    <div class="section">
+      <h2><span>7.</span> Cookies</h2>
+      <p>Our website may use first-party cookies to keep your session active and improve your experience. We do not use third-party behavioral advertising cookies without your consent.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>8.</span> Minors</h2>
+      <p>VivenDapp is not directed at persons under 18 years of age. We do not intentionally collect information from minors. If we detect that a minor has provided their data without authorization, we will delete it immediately.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>9.</span> Changes to This Policy</h2>
+      <p>We may update this Privacy Policy periodically. We will notify you of significant changes through the app, email, or WhatsApp. The "last updated" date at the top of this document indicates when the most recent revision was made.</p>
+    </div>
+
+    <div class="section">
+      <h2><span>10.</span> Contact</h2>
+      <p>For any questions, complaints, or requests related to this Privacy Policy:</p>
+      <div class="card">
+        <div class="card-body">
+          <strong>VivenDapp</strong><br/>
+          📧 <a href="mailto:privacidad@vivendapp.io">privacidad@vivendapp.io</a><br/>
+          🌐 <a href="https://vivendapp.io">vivendapp.io</a><br/>
+          💬 WhatsApp: +57 321 748 0382<br/>
+          📍 Bogotá, Colombia
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- END ENGLISH -->
+
+  <div class="footer">
+    <p>© 2026 VivenDapp. Todos los derechos reservados / All rights reserved.</p>
+    <p style="margin-top:6px"><a href="https://vivendapp.io" style="color:#42BFEC;text-decoration:none;">vivendapp.io</a></p>
+  </div>
+
+</div>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.content-es,.content-en').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+  document.querySelector('.content-' + lang).classList.add('show');
+  event.target.classList.add('active');
+}
+// Default: detect browser language
+const browserLang = navigator.language || navigator.userLanguage;
+if (browserLang && !browserLang.startsWith('es')) {
+  setLang('en');
+  document.querySelectorAll('.lang-btn')[1].classList.add('active');
+  document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+}
+</script>
+</body>
+</html>
