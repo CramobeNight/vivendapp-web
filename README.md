@@ -27,4 +27,4 @@ Cualquier push a `main` despliega automáticamente en producción.
 - [ ] Favicon personalizado
 
 ## Contacto
-VIVI — IA de VivenDapp: https://wa.me/573217480382
+VIVI — IA de VivenDapp: https://wa.me/573135168573
